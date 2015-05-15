@@ -130,7 +130,7 @@ key "39360168"
 \end_layout
 
 \begin_layout Enumerate
-电子商务 电子商务网站是推荐系统被广泛应用的一个邻域之一。亚马逊是著名的电子网站，它把推荐系统应用到了极致,也是最早应用推荐系统的网站之一。它提出来名为item
+电子商务 电子商务网站是推荐系统被广泛应用的一个领域之一。亚马逊是著名的电子网站，它把推荐系统应用到了极致,也是最早应用推荐系统的网站之一。它提出来名为item
 -to-item的协同过滤算法
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -211,18 +211,48 @@ key "39360168"
 \end_layout
 
 \begin_layout Standard
-上述的推荐系统的主要功能是从一个完整的可投入使用的角度来提出的。其中这些功能我们最常见的一个体现就是生成TopN推荐
+上述的推荐系统的主要功能是从作为一个完整的可投入使用的系统角度来提出的。其中这些功能我们最常见的一个体现就是生成TopN推荐，如亚马逊的首页提供的TopN推荐，
+见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "亚马逊topN"
+
+\end_inset
+
+。而推荐评分预测问题是实现这些功能的一个基础。评分预测以某个用户未评分的物品为输入，产生对该用户给这个物品的评分的预测作为输出。产生的评分预测可以用于为推荐系统
+作出推荐的一个重要参考。推荐系统的评分预测很容易用离线实验的方式来进行评估，通过对照预测值与真实值，用几种误差度量的方法来量化预测结果的准确性质。平凡预测问题主
+要集中在学术界，本文也是主要致力于推荐系统产生预测的评分。
 \begin_inset Float figure
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename 亚马逊推荐.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-我草你麻痹
+Amazon首页提供的TopN推荐
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "亚马逊topN"
 
 \end_inset
 
@@ -252,8 +282,8 @@ key "2155197"
 
 \begin_layout Enumerate
 基于内容的推荐(content-based recommendation) 基于内容的推荐是利用已有的物品或者用户的信息，将其固有的特征抽离出来。物品信息抽离的
-方式可以由人工得打上标签或者通过分类算法获得，用户的特征可以从其历史记录中获取。根据用户的特征为其推荐符合特征的物品。比如在网络书店中，一个用户他特征是“c++
-程序员”，那么推荐系统很有可能为他推荐具有相同或者相似特征的书籍《c++ primer》。决策树、线性分类、朴素贝叶斯等方式常被应用于基于内容的推荐
+方式可以由人工得打上标签或者通过分类算法获得，用户的特征可以从算法其历史记录中获取。根据用户的特征为其推荐符合特征的物品。比如在网络书店中，一个用户他特征是“c
+++程序员”，那么推荐系统很有可能为他推荐具有相同或者相似特征的书籍《c++ primer》。决策树、线性分类、朴素贝叶斯等方式常被应用于基于内容的推荐
 \begin_inset CommandInset citation
 LatexCommand cite
 key "4117651"
@@ -275,9 +305,9 @@ key "774803"
 
 \end_inset
 
-。协同过滤算法存在这样的问题：由于协同过滤依赖与用户的历史行为，那么推荐系统基于用户的（user-based）和基于物品的（item-based）协同过滤。基于
-用户的协同过滤将不知道为一个没有历史记录的新用户提供什么样的推荐。这个问题被称作冷启动问题(cold start)。冷启动问题的研究是推荐系统领域的一个热门方向
-。
+。协同过滤算法存在这样的问题：由于协同过滤依赖与用户的于研究评分预测问题。历史行为，那么推荐系统基于用户的（user-based）和基于物品的（item-bas
+ed）协同过滤。基于用户的协同过滤将不知道为一个没有历史记录的新用户提供什么样的推荐。这个问题被称作冷启动问题(cold start)。冷启动问题的研究是推荐系
+统领域的一个热门方向。
 \end_layout
 
 \begin_layout Enumerate
@@ -301,7 +331,7 @@ key "1793595"
 
 \begin_layout Standard
 相对于其他的方式，协同推荐系统不需要人为地添加标签，大大减少了数据预处理时候产生的工作两。同时，协同过滤更擅长挖掘那些冷门的物品从而提供更多样化的推荐。最后协同
-协同过滤算法在实际工程中表现出良好的推荐精确读。因此，协同过滤常常在个性化推荐系统中作为主要的方式被广泛使用。本文着重于研究协调过滤的算法。
+协同过滤算法在实际工程中表现出良好的推荐精确读。因此，协同过滤常常在个性化推荐系统中作为主要的方式被广泛使用。本文着重于研究协同过滤的方式。
 \end_layout
 
 \begin_layout Section
@@ -336,6 +366,111 @@ target "www.netflixprize.com"
 ，它由著名的在线电影公司Netlix举办。从2006年的第一届到2009年为止已经成功举办了三届。Netflix提供了他们的在线电影数据库，要求参赛者能在他们原
 有的推荐系统Cinematch上至少提10%的高预测的准确率。冠军将会获得一百万美元的奖励。该赛事吸引了许多从事数据挖掘、推荐系统等领域的学者，并且在比赛中长生
 了许多优秀的新算法，极大地推动了推荐系统领域的发展。
+\end_layout
+
+\begin_layout Standard
+早期的推荐系统主要是基于内容的推荐，需要分析资源的内容信息
+\begin_inset CommandInset citation
+LatexCommand cite
+key "303284,245168"
+
+\end_inset
+
+。由于分析资源内容信息较为困难以及难以提供的推荐物品范围小等问题，研究者提出稀疏度了协调过滤的推荐方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "777495,777206,774803,340335"
+
+\end_inset
+
+。GroupLens小组使用的是基于用户的协同过滤方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "340335,774803"
+
+\end_inset
+
+，这种方法主要根据用户之间的相似度来提供推荐。Karypis等人在2001年提出基于物品的协同过滤方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "804402,124971"
+
+\end_inset
+
+，并且在GroupLens数据集上获得了想对于基于用户的方法更加精确的结果
+\begin_inset CommandInset citation
+LatexCommand cite
+key "499786"
+
+\end_inset
+
+。与基于用户的协同过滤不同，基于物品的协同过滤是根据物品之间的相似的来提供推荐的。文章
+\begin_inset CommandInset citation
+LatexCommand cite
+key "107804"
+
+\end_inset
+
+提出基于图的算法来计算用户的相似度。协同过滤推荐面临的一个主要问题是数据的稀疏性，用户评分过的物品在总的物品集合中只占据了很小的一部分，对于一些噪声比较敏感，这
+将会导致推荐质量的下降。对于这种问题，Sarwar等人
+\begin_inset CommandInset citation
+LatexCommand cite
+key "205701"
+
+\end_inset
+
+采用奇异值分解（Singular Value Decomposition对 ）的方法来减少物品矩阵的维度，提高推荐的质量。Simon Funk等人
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NetflixUpdateTryThisatHome"
+
+\end_inset
+
+在SVD基础上作出了优化，在Netflix Prize上取得了优异的结果，后来被称作隐语模型（Latent Factor Model）。
+\end_layout
+
+\begin_layout Standard
+由于用户与物品的数量庞大，进行一次离线计算将花费大量的时间，推荐结果的时效性难以保障。针对这一问题，不同学者也提出了一些优化的方法。上述奇异值分解是一个有效的方
+法。文章
+\begin_inset CommandInset citation
+LatexCommand cite
+key "1284393,485233,295125"
+
+\end_inset
+
+采用聚类的方法，把用户分为几个簇，在在簇内进行寻找邻居，而不是在全局范围内搜索邻居，减少了计算量。文章
+\begin_inset CommandInset citation
+LatexCommand cite
+key "56775"
+
+\end_inset
+
+提出了一种RecTree的算法来减少搜索空间。
+\end_layout
+
+\begin_layout Section
+本文工作
+\end_layout
+
+\begin_layout Subsection
+本文研究内容与成果
+\end_layout
+
+\begin_layout Standard
+针对目前推荐系统的一些问题，本文主要研究推荐系统的架构以及算法的设计。本文使用的是MovieLens的数据集，采用协同过滤的方法对用户提供评分预测。本文主要工作
+内容如下：
+\end_layout
+
+\begin_layout Standard
+1.推荐引擎TinyRec设计与实现。目前各大互联网公司使用的都是自己开发的推荐系统，开源的推荐框架并不是很多，针对这种情况，本文给出了一个推荐引擎TinyRec
+的实现。一个完整的推荐系统除了推荐引擎之外，包括前台web展示页面的支持以及数据收集清洗模块以及后台复杂的业务流程。本文目前实现的是提供评分预测的一个推荐引擎。
+TinyRec是一个轻量级的推荐引擎，可以作为一个推荐框架使用。它可以从给定的数据集中读取数据并将其结构化。它提供不同的数据存储方式的支持，可以支持基于内存的数
+据库如Redis，也可以支持关系型数据库。它可以通过配置文件灵活得选择各种算法。它还提供了根据推荐结果计算推荐精确度的功能。TinyRec为本文各种算法研究以及
+推荐结果分析提供了支持。
+\end_layout
+
+\begin_layout Standard
+2.协调过滤算法的设计与实现。本文分别实现了主流的基于用户的协同过滤算法和基于物品的协调过滤算法的实现。
 \end_layout
 
 \begin_layout Standard
