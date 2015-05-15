@@ -376,7 +376,7 @@ key "303284,245168"
 
 \end_inset
 
-。由于分析资源内容信息较为困难以及难以提供的推荐物品范围小等问题，研究者提出稀疏度了协调过滤的推荐方法
+。由于分析资源内容信息较为困难以及难以提供的推荐物品的范围小等问题，研究者提出稀疏度了协调过滤的推荐方法
 \begin_inset CommandInset citation
 LatexCommand cite
 key "777495,777206,774803,340335"
@@ -453,7 +453,7 @@ key "56775"
 \end_layout
 
 \begin_layout Subsection
-本文研究内容与成果
+本文研究内容的与成果
 \end_layout
 
 \begin_layout Standard
@@ -470,7 +470,33 @@ TinyRec是一个轻量级的推荐引擎，可以作为一个推荐框架使用�
 \end_layout
 
 \begin_layout Standard
-2.协调过滤算法的设计与实现。本文分别实现了主流的基于用户的协同过滤算法和基于物品的协调过滤算法的实现。
+2.协同过滤算法的设计与实现。本文分别给出了主流的基于用户的协同过滤算法和基于物品的协调过滤算法的实现。对于不同的相似度算法，如余弦相似度、pearson相关系数
+、spearman相关系数，本文研究了一些实现的细节。针对协同过滤算法用户对物品评分的稀疏性问题，本文还实现了一个简单的稀疏向量的运算库。针对协同过滤算法复杂度
+高这一问题，本文给出了算法并行化的实现，使之能够更加充分得利用计算资源，减少计算时间。
+\end_layout
+
+\begin_layout Standard
+3.各种协同过滤算法的比较与分析。目前，对于一个协同过滤的推荐引擎，存在许多算法的选择。比如对于基于用户的协调同推荐算法的相似度度量方式，就有余弦相似度、pear
+son相关系数、spearman相关系数这几种，对于每种相似度度量方式，就有不同的修正方式。比如使用pearson相关系数的相似度度量算法可以选择默认评分填补（
+Default Voting）、重要性权重（Significance Weighting）等修正方式。同时相同算法下也有不同可选的参数，比如采用KNN来进行评分
+预测时候邻域大小K值的选择也会影响预测的结果。本文通过控制变量的方式，研究了不同的算法、相同算法下不同参数的选择对的评分预测精度影响，并根据结果给出了分析。最终
+分析了不同协同过滤算法的特性以及在实际应用中的选择考虑。
+\end_layout
+
+\begin_layout Subsection
+本文结构
+\end_layout
+
+\begin_layout Standard
+本文一共分为五章，文章结构以及各章内容如下：
+\end_layout
+
+\begin_layout Chapter
+协同过滤推荐关键技术介绍
+\end_layout
+
+\begin_layout Standard
+第一章
 \end_layout
 
 \begin_layout Standard
