@@ -491,12 +491,820 @@ Default Voting）、重要性权重（Significance Weighting）等修正方式�
 本文一共分为五章，文章结构以及各章内容如下：
 \end_layout
 
+\begin_layout Section
+术语和记号
+\end_layout
+
+\begin_layout Standard
+在协同过滤的算法的评分预测问题中，使用的数据集是由用户的评分记录所构成的，每一条记录最主要的内容可以用一个三维的向量表示：
+\begin_inset Formula $\left(u,i,r\right)$
+\end_inset
+
+。它的意思是用户
+\begin_inset Formula $u$
+\end_inset
+
+为物品
+\begin_inset Formula $i$
+\end_inset
+
+给出了
+\begin_inset Formula $r$
+\end_inset
+
+的打分。用户（user）指的是为物品打分的个体，物品（item）在其他文章中也称作商品，对于某种特点应用的推荐系统中，物品可以是电影、音乐、文章等，本文中都称为
+物品。评分可以体现用户对物品的喜爱程度，它可以从用户主动提供的显式评分，如打分，喜欢等方式获得，也可以根据用户在页面上的行为获取隐式评分，比如页面停留时间、物品
+的转换、页面的点击等等。本文讨论的评分是由MovieLens数据集直接给出的评分，是用户的显式地为电影作出的打分。在本文中，集合使用大写英文字母表示。
+\end_layout
+
+\begin_layout Standard
+本文中，数据集被分割为两个部分，训练数据集（training dataset）和测试数据集（testing dataset）。用于挖掘关联关系的训练数据集记为
+\begin_inset Formula $Tr$
+\end_inset
+
+，用于检验算法的测试数据集记为
+\begin_inset Formula $Ts$
+\end_inset
+
+。具体的记号见表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "本文术语表格"
+
+\end_inset
+
+。更多特点算法相关的记号会在文章中指出。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+记号
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+定义
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+可用的评分集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $U$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+所有用户的集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $I$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+所有物品的集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第
+\begin_inset Formula $u$
+\end_inset
+
+个用户
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第
+\begin_inset Formula $i$
+\end_inset
+
+个物品
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $r_{u,i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+用户
+\begin_inset Formula $u$
+\end_inset
+
+对物品
+\begin_inset Formula $i$
+\end_inset
+
+的评分
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\hat{r}_{u,i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+对于
+\begin_inset Formula $r_{u,i}$
+\end_inset
+
+的预测值
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $U_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+所有评价过物品
+\begin_inset Formula $i$
+\end_inset
+
+的用户集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $I_{u}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+用户
+\begin_inset Formula $u$
+\end_inset
+
+评价过的所有物品集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+本文中使用的各种记号与术语
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "本文术语表格"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 协同过滤推荐关键技术介绍
 \end_layout
 
+\begin_layout Section
+基于邻域的评分预测
+\end_layout
+
 \begin_layout Standard
-第一章
+协同过滤问题常常可以表示为一个用户对物品的矩阵，在这个矩阵中每个元素代表一个用户对特点物品的评分。由于协同过滤问题的特点，这个矩阵非常稀疏
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JonathanLHerlocker1999An"
+
+\end_inset
+
+，因为一个用户通常只评价了占物品集合中很小一部分的物品。对于一个基于邻域的评分预测就是要根据用户的领域来找出这个矩阵的某个空值最可能的值。换句话说，一个用户给物
+品的评分更加依赖于和他有相似兴趣的人或者其他可信任的数据源。为了说明这一核心思想，见表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "四个用户为电影的评分表格"
+
+\end_inset
+
+，表中有四个用户对四部电影的不同评分，评分取值范围为1～5分，空值表示该用户未能给该电影评分，而问号是我们即将要对其给出预测。首先张三和赵六的兴趣比较相似，因为
+他们喜欢相同的电影，给星球大战和超时空接触打了高分，并且不怎么喜欢篮球梦。而对比赵六和剩下两个人的兴趣，发现他们的兴趣不是那么一致，因此张三给泰坦尼克的分数将作
+为我们主要的参考来预测赵六的评分。而李四和王五的评分对预测结果的影响就非常小了。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+星球大战
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+篮球梦
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+超时空接触
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+泰坦尼克
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+张三
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+李四
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+王五
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+赵六
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+？
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+一个电影评分预测的例子，四个用户为电影的评分表格
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "四个用户为电影的评分表格"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+基于用户的协同过滤
+\end_layout
+
+\begin_layout Standard
+基于用户的协同过滤是早期协调过滤推荐系统中最常用的算法。在1994年GroupLens小组采用基于用户的协同过滤算法来为用户提供新闻推荐
+\begin_inset CommandInset citation
+LatexCommand cite
+key "340335"
+
+\end_inset
+
+。直到基于物品的协同过滤出现以前，它一直是推荐领域中最热门的算法。比如在一个个性化推荐系统中，用户A需要得到推荐时，推荐系统会先找到和它有相似兴趣的用户，把那些
+用户喜欢的而用户A没有接触过的物品推荐给A。类似的，在评分预测问题中，基于用户的协同过滤通过寻找与目标用户最相似的一群用户，根据他们的打分情况来提供评分预测。基
+于用户的协同过滤假设一群用户的兴趣在过去的历史记录中相似，那么在未来的一段时间内，他们的兴趣仍然相似。所以在用户A需要得到对于某个物品的推荐或者需要进行评分预测
+时候，我们有足够的理由相信，和用户A有相同兴趣的那些用户对这个物品的评价与用户A将来对它的评价很相似。
+\end_layout
+
+\begin_layout Standard
+通过以上表述，我们可以得出基于用户的协同过滤算法需要下边这两个过程；
+\end_layout
+
+\begin_layout Enumerate
+寻找和目标用户相似的用户集合。
+\end_layout
+
+\begin_layout Enumerate
+根据这个用户的集合里其他用户的评价，产生这个用户的评分预测。
+\end_layout
+
+\begin_layout Standard
+为了寻找和目标用户相似的用户集合，我们首先得知道两个用户之间相似度的计算方法。常见的相似度计算方法在章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:相似度度量方法"
+
+\end_inset
+
+中描述。假设我们需要为用户
+\begin_inset Formula $u$
+\end_inset
+
+提供物品
+\begin_inset Formula $i$
+\end_inset
+
+的评分预测
+\begin_inset Formula $\hat{r}_{u,i}$
+\end_inset
+
+。首先我们在用户集合
+\begin_inset Formula $U$
+\end_inset
+
+中找出评价过物品
+\begin_inset Formula $i$
+\end_inset
+
+的用户集合
+\begin_inset Formula $U{}_{i}$
+\end_inset
+
+，其中
+\begin_inset Formula $u\notin U{}_{i}$
+\end_inset
+
+。接着两两计算用户
+\begin_inset Formula $u$
+\end_inset
+
+与
+\begin_inset Formula $U{}_{i}$
+\end_inset
+
+中的每个用户的相似度，挑选与
+\begin_inset Formula $u$
+\end_inset
+
+相似的用户，我们得到了与用户
+\begin_inset Formula $u$
+\end_inset
+
+最相似的用户集合，用
+\begin_inset Formula $\mathcal{N}_{i}(u)$
+\end_inset
+
+表示。选取该最相似集合的方法在章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:用K邻近算法预测"
+
+\end_inset
+
+中描述。我们可以简单地使用邻域内用户对
+\begin_inset Formula $i$
+\end_inset
+
+评分的平均值来作为
+\begin_inset Formula $\hat{r}_{u,i}$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$$
+\backslash
+hat{r}_{u,i}=
+\backslash
+frac{1}{
+\backslash
+left|
+\backslash
+mathcal{N}_{i}(u)
+\backslash
+right|}
+\backslash
+underset{v
+\backslash
+in
+\backslash
+mathcal{N}_{i}(u)}{
+\backslash
+sum}r_{u,i}$$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{r}_{u,i}=\frac{1}{\left|\mathcal{N}_{i}(u)\right|}\underset{v\in\mathcal{N}_{i}(u)}{\sum}r_{u,i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+什么
+\end_layout
+
+\begin_layout Subsection
+相似度度量方法
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:相似度度量方法"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+用K邻近算法预测
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:用K邻近算法预测"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
