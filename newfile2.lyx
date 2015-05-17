@@ -522,7 +522,8 @@ hline
 
 的打分。用户（user）指的是为物品打分的个体，物品（item）在其他文章中也称作商品，对于某种特点应用的推荐系统中，物品可以是电影、音乐、文章等，本文中都称为
 物品。评分可以体现用户对物品的喜爱程度，它可以从用户主动提供的显式评分，如打分，喜欢等方式获得，也可以根据用户在页面上的行为获取隐式评分，比如页面停留时间、物品
-的转换、页面的点击等等。本文讨论的评分是由MovieLens数据集直接给出的评分，是用户的显式地为电影作出的打分。在本文中，集合使用大写英文字母表示。
+的转换、页面的点击等等。本文讨论的评分是由MovieLens数据集直接给出的评分，是用户的显式地为电影作出的打分。其有效评分范围1～5分，分值为整数。本文的讨论
+的评分都是按照这种机制。是在本文中，集合使用大写英文字母表示。
 \end_layout
 
 \begin_layout Standard
@@ -550,7 +551,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="2">
+<lyxtabular version="3" rows="12" columns="2">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -760,6 +761,60 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\bar{r_{u}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+用户
+\begin_inset Formula $u$
+\end_inset
+
+的平均打分
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\bar{r_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+物品
+\begin_inset Formula $i$
+\end_inset
+
+的平均打分
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $U_{i}$
 \end_inset
 
@@ -822,7 +877,7 @@ status open
 
 \end_inset
 
-
+j
 \begin_inset CommandInset label
 LatexCommand label
 name "本文术语表格"
@@ -1299,7 +1354,7 @@ reference "eq:邻域内用户对i评分的平均值"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{r}_{u,i}=\frac{\underset{v\in\mathcal{N}_{i}(u)}{\sum}w_{u,v}r_{u,i}}{\underset{v\in\mathcal{N}_{i}(u)}{\sum}\left|w_{u,v}\right|}\label{eq:添加权重的评分}
+\hat{r}_{u,i}=\frac{\underset{v\in\mathcal{N}_{i}(u)}{\sum}w_{u,v}r_{v,i}}{\underset{v\in\mathcal{N}_{i}(u)}{\sum}\left|w_{u,v}\right|}\label{eq:添加权重的评分}
 \end{equation}
 
 \end_inset
@@ -1400,7 +1455,7 @@ reference "sub:相似度度量方法"
 ，那么可以这样来描述评分预测的公式：
 \begin_inset Formula 
 \begin{equation}
-\hat{r}_{ua,i}=\frac{\underset{j\in\mathcal{N}_{u}(i)}{\sum}w_{i,j}r_{u,j}}{\underset{j\in\mathcal{N}_{u}(j)}{\sum}\left|w_{i,j}\right|}\label{eq:基于物品的评分}
+\hat{r}_{u,i}=\frac{\underset{j\in\mathcal{N}_{u}(i)}{\sum}w_{i,j}r_{u,j}}{\underset{j\in\mathcal{N}_{u}(j)}{\sum}\left|w_{i,j}\right|}\label{eq:基于物品的评分}
 \end{equation}
 
 \end_inset
@@ -1424,7 +1479,14 @@ name "sub:相似度度量方法"
 \end_layout
 
 \begin_layout Standard
-一种最基本的计算两个个体的相似读的方法是余弦相似度。余弦相似度计算两个向量之间的夹角，其取值范围为
+一种最基本的计算两个个体的相似读的方法是余弦相似度
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JonathanLHerlocker1999An"
+
+\end_inset
+
+。余弦相似度计算两个向量之间的夹角，其取值范围为
 \begin_inset Formula $(-1,1)$
 \end_inset
 
@@ -1496,7 +1558,379 @@ reference "eq:cos相似度"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-cos(\mathbf{x}_{u},\mathbf{x}_{v})=\frac{\underset{i\in I_{u}\cap I_{v}}{\sum}r_{u,i}r_{v,i}}{\sqrt{\underset{i\in I_{u}}{\sum r_{u,i}^{2}}\underset{j\in I_{v}}{\sum r_{v,j}^{2}}}}\label{eq:cos相似度-1}
+cos(\mathbf{x}_{u},\mathbf{x}_{v})=\frac{\underset{i\in I_{u}\cap I_{v}}{\sum}r_{u,i}r_{v,i}}{\sqrt{\underset{i\in I_{u}}{\sum r_{u,i}^{2}}\underset{j\in I_{v}}{\sum r_{v,j}^{2}}}}\label{eq:cos相似度基于用户}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在基于物品的协同过滤算法中，类似的我们把物品
+\begin_inset Formula $i$
+\end_inset
+
+看作是一个向量
+\begin_inset Formula $\mathbf{\bar{r_{v}})x}_{i}\in\mathbb{R}^{\left|U\right|}$
+\end_inset
+
+，如果用户
+\begin_inset Formula $u$
+\end_inset
+
+给物品
+\begin_inset Formula $i$
+\end_inset
+
+有过评分，那么
+\begin_inset Formula $\mathbf{x}_{iu}=r_{u,i}$
+\end_inset
+
+，其他则为0。那么两个物品
+\begin_inset Formula $i$
+\end_inset
+
+，
+\begin_inset Formula $j$
+\end_inset
+
+的相似读可写成：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+cos(\mathbf{x}_{i},\mathbf{x}_{j})=\frac{\underset{u\in U_{i}\cap U_{j}}{\sum}r_{u,i}r_{u,j}}{\sqrt{\underset{u\in U_{i}}{\sum r_{u,i}^{2}}\underset{v\in U_{j}}{\sum r_{v,j}^{2}}}}\label{eq:cos相似度基于物品}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+余弦相似度可以进一步根据用户个人的打分习惯来调整，见章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:用K邻近算法预测"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+pearson相关系数
+\end_layout
+
+\begin_layout Standard
+pearson相关系数可以用于衡量一组数据的线性相关程度。与余弦相似度相似，相关系数的绝对值越大，相关程度越高。给定两组离散的数据x，y我们可以计算他们的pea
+rson相关系数，其中
+\begin_inset Formula $\sigma$
+\end_inset
+
+表示为数据的标准差：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Pearson(x,y)=\frac{\sum(x,y)}{\sigma_{x}\sigma_{y}}\label{eq:pearson base}
+\end{equation}
+
+\end_inset
+
+在基于用户的协同推荐算法中，用户u和用户v之间的pearson相关系数为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+w_{uv}=Pearson(u,v)=\frac{\underset{i\in I_{u}\cap I_{v}}{\sum}(r_{u,i}-\bar{r_{u}})\cdotp(r_{v,i}-\bar{r_{v}})}{\sqrt{\underset{i\in I_{u}}{\sum}(r_{u,i}-\bar{r_{u}})^{2}\underset{i\in I_{v}}{\sum}(r_{v,i}-\bar{r_{v}})^{2}}}\label{eq:pearson user base-}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在基于物品的协同推荐算法中，物品
+\begin_inset Formula $i$
+\end_inset
+
+和物品
+\begin_inset Formula $j$
+\end_inset
+
+之间的pearson相关系数为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+w_{ij}=Pearson(i,j)=\frac{\underset{u\in U_{i}\cap U_{j}}{\sum}(r_{u,i}-\bar{r_{i}})\cdotp(r_{u,j}-\bar{r_{j}})}{\sqrt{\underset{u\in U_{i}}{\sum}(r_{u,i}-\bar{r_{i}})^{2}\underset{u\in U_{j}}{\sum}(r_{u,i}-\bar{r_{j}})^{2}}}\label{eq:pearson item base}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+pearson相关系数是依赖与数据符合正态分布的假设，不过大部分实际的数据都能符合这个假设。如果假设不成立的话，可以使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:spearman秩相关系数"
+
+\end_inset
+
+描述的spearman相关系数。
+\end_layout
+
+\begin_layout Subsubsection
+spearman秩相关系数
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:spearman秩相关系数"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+和pearson相关系数不同，spearman秩相关系数不对原始变量作特殊的要求，因此对于不服从正态分布、分布未知的变量可以使用spearman秩相关系数。sp
+earman秩相关系数计算时先把变量X，Y成对的值从哦按照从小到大的顺序排列，将原始的数值映射成秩，再按照pearson相关系数来计算相关度。
+\end_layout
+
+\begin_layout Standard
+在基于用户的协同过滤算法中，设用户
+\begin_inset Formula $u$
+\end_inset
+
+，
+\begin_inset Formula $v$
+\end_inset
+
+的评分被映射成
+\begin_inset Formula $rank$
+\end_inset
+
+
+\begin_inset Formula $_{u}$
+\end_inset
+
+，
+\begin_inset Formula $rank_{v}$
+\end_inset
+
+，秩的平均值为
+\begin_inset Formula $\overline{rank_{u}}$
+\end_inset
+
+，
+\begin_inset Formula $\overline{rank_{v}}$
+\end_inset
+
+，秩的标准差记为
+\begin_inset Formula $\sigma_{u}$
+\end_inset
+
+，
+\begin_inset Formula $\sigma_{v}$
+\end_inset
+
+,
+\begin_inset Formula $m$
+\end_inset
+
+为共同评分的个数。则spearman秩相关系数为：
+\begin_inset Formula 
+\begin{equation}
+w_{uv}=Spearman(u,v)=\frac{\stackrel[i=1]{m}{\sum}(rank_{u,i}-\overline{rank_{u}})\cdotp(rank_{v,i}-\overline{rank_{v}})}{\sigma_{u}\sigma_{v}}\label{eq:spearman user base}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+相似的，基于物品的协同过滤算法中，spearman秩相关系数为：
+\begin_inset Formula 
+\begin{equation}
+w_{ij}=Spearman(i,j)=\frac{\stackrel[u=1]{m}{\sum}(rank_{i,u}-\overline{rank_{i}})\cdotp(rank_{j,u}-\overline{rank_{j}})}{\sigma_{i}\sigma_{j}}\label{eq:spearman user base-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+重要性权重（Significance Weighting）
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:重要性权重（Significance-Weighting）"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果给定的两个用户之间可用的数据量很小，那么上述相关性度量方法将不能很客观的表现它们直接的相关度量，比如如下情况：在计算用户A和用户B的相似度时，用户A，B共同
+评分过的物品只有X，Y，无论A和B为X，Y打了多少分，pearson相关系数和spearman秩相关系数总会给出绝对值为1的很高的相关性。而这与我们的期望所违背
+。同时，从直觉上我们还认为，如果两个用户共同评价的物品越多，那么计算出的相似度就越具有参考价值。Herlocker 等人针对这个问题提出了重要性权重（Signi
+ficance Weighting）这一解决方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JonathanLHerlocker1999An"
+
+\end_inset
+
+。主要思想就是，在计算相似度的时候，给那些共同参与物品特别少的用户之间的相似度作出惩罚：
+\begin_inset Formula 
+\begin{equation}
+w_{uv}^{\prime}=\frac{min\{\left|I_{u}\cap I_{v}\right|,\gamma\}}{\gamma}\times w_{uv}\label{eq:significance weighting user}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+类似的针对物品直接的相似度我们也可以使用如下的方法：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+w_{ij}^{\prime}=\frac{min\{\left|U_{i}\cap U_{j}\right|,\gamma\}}{\gamma}\times w_{uv}\label{eq:significance weighting item}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\gamma$
+\end_inset
+
+是一个参数，它表示一个阈值，如果相同物品，或者相同用户的数量小于这个阈值，该相似度就会收到惩罚，文章
+\begin_inset CommandInset citation
+LatexCommand cite
+key "706157,JonathanLHerlocker1999An"
+
+\end_inset
+
+表明，当
+\begin_inset Formula $\gamma>25$
+\end_inset
+
+时候，评分预测的精确度得到很大的提升，
+\begin_inset Formula $\gamma=50$
+\end_inset
+
+时将会达到最好的结果。
+\end_layout
+
+\begin_layout Subsubsection
+方差权重
+\end_layout
+
+\begin_layout Subsection
+评分标准化
+\end_layout
+
+\begin_layout Standard
+在实际情况中，每个用户都有自己的打分习惯。有些人比较喜欢给电影打高分，个自己不喜欢的电影三分，有些人的打分则比较严厉，非常谨慎地打高分。我们在为用户作出平凡预测
+的时候，应当考虑到这些情况，要根据每个人打分习惯的不同情况来提供预测。
+\end_layout
+
+\begin_layout Subsubsection
+均值中心化
+\end_layout
+
+\begin_layout Standard
+均值中心化
+\begin_inset CommandInset citation
+LatexCommand cite
+key "breese1998empirical"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "340335"
+
+\end_inset
+
+的思想是通过评分与标准值来比较，从而决定评分的情况。在使用余弦相似度计算相似度时候，可以调整式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cos相似度基于用户"
+
+\end_inset
+
+为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+cos(\mathbf{x}_{u},\mathbf{x}_{v})=\frac{\underset{i\in I_{u}\cap I_{v}}{\sum}(r_{u,i}-\overline{r_{u}})(r_{v,i}-\overline{r_{u}})}{\sqrt{\underset{i\in I_{u}}{\sum(r_{u,i}-\overline{r_{u}}}\underset{j\in I_{v}}{)^{2}\sum(r_{v,j}}-\overline{r_{v}}})^{2}}\label{eq:cos相似度基于用户-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cos相似度基于物品"
+
+\end_inset
+
+同理，不再赘述。而pearson相关系数与spearman秩相关系数均考虑了均值的情况，所以不需要调整。在生成评分时，基于物品的协同过滤算法可以直接使用
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:基于物品的评分"
+
+\end_inset
+
+，因为选取的用户对其他物品的评分已经包含了用户的个人习惯。而对于基于用户的协同过滤算法则需要调整式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:添加权重的评分"
+
+\end_inset
+
+为：
+\begin_inset Formula 
+\begin{equation}
+\hat{r}_{u,i}=\overline{r_{u}}+\frac{\underset{v\in\mathcal{N}_{i}(u)}{\sum}w_{u,v}(r_{v,i}-\overline{r_{v}})}{\underset{v\in\mathcal{N}_{i}(u)}{\sum}\left|w_{u,v}\right|}\label{eq:基于用户的KNN-中心化}
 \end{equation}
 
 \end_inset
@@ -1516,7 +1950,158 @@ name "sub:用K邻近算法预测"
 \end_layout
 
 \begin_layout Standard
+根据个人打分习惯
+\end_layout
+
+\begin_layout Subsubsection
+默认打分
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:默认打分"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 领域选取 基准zhi
+\end_layout
+
+\begin_layout Section
+预测精确率度量
+\end_layout
+
+\begin_layout Chapter
+一个基于协同过的评分预测框架的实现 
+\end_layout
+
+\begin_layout Section
+数据流程 
+\end_layout
+
+\begin_layout Section
+系统框架 
+\end_layout
+
+\begin_layout Subsection
+相似度模块
+\end_layout
+
+\begin_layout Subsection
+预测模块 
+\end_layout
+
+\begin_layout Subsection
+数据预处理模块（分割、导入） 
+\end_layout
+
+\begin_layout Subsection
+精确度验证模块 
+\end_layout
+
+\begin_layout Subsection
+Benchmark模块 
+\end_layout
+
+\begin_layout Subsection
+框架配置模块 
+\end_layout
+
+\begin_layout Section
+算法设计与实现 
+\end_layout
+
+\begin_layout Subsection
+item-based协同过滤 
+\end_layout
+
+\begin_layout Subsection
+user-based协同过滤 
+\end_layout
+
+\begin_layout Subsection
+相似度度量 
+\end_layout
+
+\begin_layout Subsubsection
+cos 
+\end_layout
+
+\begin_layout Subsubsection
+pearson 实现的方法 化简 
+\end_layout
+
+\begin_layout Subsubsection
+spearman 
+\end_layout
+
+\begin_layout Subsubsection
+重要性权重 
+\end_layout
+
+\begin_layout Subsection
+默认评分 
+\end_layout
+
+\begin_layout Subsection
+knn预测 
+\end_layout
+
+\begin_layout Subsection
+精确度评估 
+\end_layout
+
+\begin_layout Subsection
+交叉验证
+\end_layout
+
+\begin_layout Chapter
+评分预测实验 
+\end_layout
+
+\begin_layout Section
+实验目的及内容 
+\end_layout
+
+\begin_layout Subsection
+实验数据及实验方法 
+\end_layout
+
+\begin_layout Subsection
+度量标准
+\end_layout
+
+\begin_layout Subsection
+实验结果与分析
+\end_layout
+
+\begin_layout Subsection
+相似度方法 cos,spearman,pearson,pearson-with default rate 
+\end_layout
+
+\begin_layout Subsection
+knn k值选择 
+\end_layout
+
+\begin_layout Subsection
+significance weighting 值选择 
+\end_layout
+
+\begin_layout Subsection
+item-based vs user-based 
+\end_layout
+
+\begin_layout Subsection
+4.4.4.5 。。
+\end_layout
+
+\begin_layout Chapter
+未来的工作 
+\end_layout
+
+\begin_layout Chapter
+结语
 \end_layout
 
 \begin_layout Standard
