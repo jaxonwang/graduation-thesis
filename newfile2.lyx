@@ -215,7 +215,7 @@ key "39360168"
 见图
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "亚马逊topN"
+reference "fig:亚马逊topN"
 
 \end_inset
 
@@ -241,18 +241,14 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Amazon首页提供的TopN推荐
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:亚马逊topN"
 
 \end_inset
 
-
+Amazon首页提供的TopN推荐
 \end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "亚马逊topN"
 
 \end_inset
 
@@ -497,10 +493,6 @@ Default Voting）、重要性权重（Significance Weighting）等修正方式�
 
 \begin_layout Section
 术语和记号
-\backslash
-hline 
-\backslash
-hline 
 \end_layout
 
 \begin_layout Standard
@@ -538,7 +530,7 @@ hline
 。具体的记号见表
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "本文术语表格"
+reference "tab:本文术语表格"
 
 \end_inset
 
@@ -872,15 +864,14 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-本文中使用的各种记号与术语
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:本文术语表格"
 
 \end_inset
 
-j
-\begin_inset CommandInset label
-LatexCommand label
-name "本文术语表格"
+本文中使用的各种记号与术语
+\end_layout
 
 \end_inset
 
@@ -893,11 +884,7 @@ name "本文术语表格"
 \end_layout
 
 \begin_layout Chapter
-协同过滤推荐关subsection{推荐系统介绍} 键技术介
-\backslash
-hline 
-\backslash
-hline 绍
+协同过滤推荐关键技术介绍
 \end_layout
 
 \begin_layout Section
@@ -917,7 +904,7 @@ key "JonathanLHerlocker1999An"
 品的评分更加依赖于和他有相似兴趣的人或者其他可信任的数据源。为了说明这一核心思想，见表
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "四个用户为电影的评分表格"
+reference "tab:四个用户为电影的评分表格"
 
 \end_inset
 
@@ -1182,15 +1169,14 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-一个电影评分预测的例子，四个用户为电影的评分表格
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:四个用户为电影的评分表格"
 
 \end_inset
 
-
-\begin_inset CommandInset label
-LatexCommand label
-name "四个用户为电影的评分表格"
+一个电影评分预测的例子，四个用户为电影的评分表格
+\end_layout
 
 \end_inset
 
@@ -1862,7 +1848,7 @@ key "706157,JonathanLHerlocker1999An"
 
 \begin_layout Standard
 在实际情况中，每个用户都有自己的打分习惯。有些人比较喜欢给电影打高分，个自己不喜欢的电影三分，有些人的打分则比较严厉，非常谨慎地打高分。我们在为用户作出平凡预测
-的时候，应当考虑到这些情况，要根据每个人打分习惯的不同情况来提供预测。
+的时候，应当考虑到这些情况，要根据每个人打分习惯的不同情况来提供预测。评分标准化的过程可以放在数据预处理阶段做，也可以调整计算公式。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1938,8 +1924,79 @@ reference "eq:添加权重的评分"
 
 \end_layout
 
+\begin_layout Subsubsection
+Z分布
+\end_layout
+
+\begin_layout Standard
+相对于均值中心化，Z分布考虑了用户评分的方差
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JonathanLHerlocker1999An"
+
+\end_inset
+
+。比如，用户A打分时候，经常给分范围是1分到5分，而用户B大部分的评分都是三分。在这种情况下，用户B给一个物品打了五分的事实将会比A给出五分的事实更少见，因此表
+现出B对这个这个物品更高的喜爱度。同样的，在基于用户和基于物品中使用Z分布来标准化时处理方法不同。基于用户的协同过滤中评分预测公式为：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{r}_{u,i}=\overline{r_{u}}+\sigma_{u}\frac{\underset{v\in\mathcal{N}_{i}(u)}{\sum}w_{u,v}(r_{v,i}-\overline{r_{v}})/\sigma_{v}}{\underset{v\in\mathcal{N}_{i}(u)}{\sum}\left|w_{u,v}\right|}\label{eq:基于用户的zcore预测}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中，
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sigma_{u}$
+\end_inset
+
+和
+\begin_inset Formula $\sigma_{v}$
+\end_inset
+
+分别表示用户u与用户v的评分的方差。同样的，对于基于物品的评分预测公式为:
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula 
+\begin{equation}
+\hat{r}_{u,i}=\overline{r_{i}}+\sigma_{i}\frac{\underset{j\in\mathcal{N}_{u}(i)}{\sum}w_{i,j}(r_{u,i}-\overline{r_{j}})/\sigma_{j}}{\underset{j\in\mathcal{N}_{u}(i)}{\sum}\left|w_{i,j}\right|}\label{eq:基于物品的zcore预测}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-用K邻近算法预测
+邻域选取
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:用K邻近算法预测"
@@ -1950,14 +2007,91 @@ name "sub:用K邻近算法预测"
 \end_layout
 
 \begin_layout Standard
-根据个人打分习惯
+在提供评分预测时，邻域的选取将会很大地影响到预测的结果。主要的邻域选取方式有如下几种
 \end_layout
 
-\begin_layout Subsubsection
-默认打分
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:默认打分"
+\begin_layout Itemize
+Top-N选取。对于每个用户和物品，只要存储N个最相似的邻居，并且使用他们来进行预测。其中，N的选择非常重要，过低N值将会导致评分预测的准确率不知，而过高的N也
+会带来准确率下降和是用大量计算资源
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JonathanLHerlocker1999An"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+阈值选取。和Top-N过滤不同，阈值选取的方法选取所有能符合要求，即大于某个阈值的所有用户或者物品来作为邻居。这个方法更加灵活，只保留了那些对提供预测有最重要参
+考意义的邻居，但是这个阈值的选取比较困难。
+\end_layout
+
+\begin_layout Itemize
+负值过滤。使用由上文
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:相似度度量方法"
+
+\end_inset
+
+提出的方法来计算相似度的区间范围是[
+\begin_inset Formula $-1,1]$
+\end_inset
+
+。理论上来说，接近
+\begin_inset Formula $-1$
+\end_inset
+
+的相似度表明两组数据间具有强烈的负相关性。但是在实际中，两个用户的的评分负相关只是表明这两个用户没有相似的兴趣，但是却没有表示出他们的兴趣究竟差了多少。直观上来
+看，负相关也没有正相关对两个个体相似度的描述更有说服力。有实验证明
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JonathanLHerlocker1999An,good1999combining"
+
+\end_inset
+
+使用负值的相似度并不能带来更加准确的结果。本文中的实现没有使用负值的相似度。
+\end_layout
+
+\begin_layout Section
+预测精确率度量
+\end_layout
+
+\begin_layout Subsection
+度量方法
+\end_layout
+
+\begin_layout Standard
+平凡预测问题很容易离线地进行实验。常见的度量方法有均方根误差（RMSE）和平均绝对误差（MAE）。设
+\begin_inset Formula $\hat{r}_{u,i}$
+\end_inset
+
+是推荐算法给用户
+\begin_inset Formula $u$
+\end_inset
+
+对物品
+\begin_inset Formula $i$
+\end_inset
+
+的评分预测，它预测的是根据测试数据集
+\begin_inset Formula $Tr$
+\end_inset
+
+中的历史数据而给出的。设
+\begin_inset Formula $r_{u,i}$
+\end_inset
+
+是在测试数据集
+\begin_inset Formula $Ts$
+\end_inset
+
+中实际存在的评分那么RMSE可以通过下式计算：
+\begin_inset Formula 
+\begin{equation}
+RMSE=\frac{\sqrt{\underset{u,i\in Ts}{\sum}(\hat{r}_{u,i}-r_{u,i})^{2}}}{\left|Ts\right|}\label{eq:RMSE}
+\end{equation}
 
 \end_inset
 
@@ -1965,11 +2099,536 @@ name "sub:默认打分"
 \end_layout
 
 \begin_layout Standard
-领域选取 基准zhi
+而平均绝对误差使用绝对值来计算：
+\begin_inset Formula 
+\begin{equation}
+MAE=\frac{\underset{u,i\in Ts}{\sum}\left|\hat{r}_{u,i}-r_{u,i}\right|}{\left|Ts\right|}\label{eq:MAE}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Section
-预测精确率度量
+\begin_layout Standard
+Netflix认为RMSE对系统的评测更加严格，因为RMSE的平方项加大了对预测与实际的偏差的惩罚。在Netflix Prize中使用的也是RMSE来评判系统评
+分预测结果的。而研究表明如果合法的评分是整数，那么对预测结果的取整后再进行精确度度量将会降低MAE的误差
+\begin_inset CommandInset citation
+LatexCommand cite
+key "takacs2007major"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+交叉验证与数据分割
+\end_layout
+
+\begin_layout Standard
+交叉验证是一种统计学的方法，它将数据样本集合切割成多份，选取一部分用来分析，而剩余部分用来对此分析的确认和验证
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kohavi1995study"
+
+\end_inset
+
+。k-ford方法是一种常见的交叉验证方法。它平均地把原始数据集合分割成K份，挑选其中的一份作为测试集，剩余的部分作为训练集合。重复这样的过程K次，使得K份中的
+每一份都能被选中作为测试集合。在机器学习领域中，k-ford方法能够有效地避免过度拟合和欠拟合的情况发生。在评分预测问题中，可以把原有数据集分成10份，分别作出
+10次的评分预测以及验证精确度的过程。再取10次精确度结果的平均作为最终对算法精度的估计。其中K值选择为10是一个经验上的考虑。
+\end_layout
+
+\begin_layout Standard
+在分割数据时，应当考虑如下的问题：分割时候应该对每个用户的所有评分做一次分割，这样能够最大限度地保证每个用户有足够的信息来为评分预测提供依据。比如两个用户A，B
+的评分如表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:评分分割例子"
+
+\end_inset
+
+，我们需要将十个记录分割成两份，我们更希望分割的结果是
+\begin_inset Formula $(1,3,5,6,8)$
+\end_inset
+
+和
+\begin_inset Formula $(2,4,7,9,10)$
+\end_inset
+
+而不是
+\begin_inset Formula $(1,2,3,4,5)$
+\end_inset
+
+和
+\begin_inset Formula $(6,7,8,9,10)$
+\end_inset
+
+。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="4">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+记录序号
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+用户
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+电影名称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+评分
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+星球大战
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+星际迷航
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+泰坦尼克
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+低俗小说
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+阿甘正传
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+泰坦尼克
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+星球大战
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+低俗小说
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+星际迷航
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+阿甘正传
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:评分分割例子"
+
+\end_inset
+
+两个用户的评分例子
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
