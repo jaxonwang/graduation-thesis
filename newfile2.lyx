@@ -2632,15 +2632,155 @@ name "tab:评分分割例子"
 \end_layout
 
 \begin_layout Chapter
-一个基于协同过的评分预测框架的实现 
+一个基于协同过的评分预测引擎TinyRec的实现 
 \end_layout
 
 \begin_layout Section
-数据流程 
+TinyRec总体介绍
+\end_layout
+
+\begin_layout Standard
+为了给本文的算法实现、运行与检测提支持，本文实现了一个轻量集推荐引擎TinyRec。TinyRec的主要功能就是对已经经过预处理的数据进行计算分析，为用户提供评
+分预测。TinyRec没有提供用户界面，而是和其他系统进行交互，提供推荐。TinyRec可以灵活地与各种算法结合，可以轻松地替换所需的算法，只需要用户实现所需算
+法再修改下配置文件的参数。TinyRec还支持各种不同的数据存储方式，如关系型数据库，部分NoSQL数据库，以及文件等。不仅如此，TinyRec还提供了一些基本
+的推荐系统所具备的功能，比如推荐精确度评估、数据分割、交叉验证等功能。TinyRec全部使用python语言
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+使用的是python2，版本为2.7.6。
+\end_layout
+
+\end_inset
+
+编写，为跨平台提供了很好的支持。另外，目前适合python的科学计算库有Numpy和Scipy，但是其没有很好地提供稀疏向量的支持，因此，TinyRec内部还实
+现了一个稀疏向量的运算库。
 \end_layout
 
 \begin_layout Section
-系统框架 
+系统功能模块划分 
+\end_layout
+
+\begin_layout Standard
+TinyRec按照功能的需求的要求可以分成如下模块：数据预处理模块，参数配置模块，推荐算法模块，数据存储模块以及精确度测量模块。如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:系统总功能模块图"
+
+\end_inset
+
+所示。
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename 系统功能模块图.eps
+	width 100col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:系统总功能模块图"
+
+\end_inset
+
+系统总功能模块图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+数据预处理模块负责执行推荐算法之前的数据处理。可用的数据集在使用之前必须要分割成训练集和测试集合，数据分割模块提供了对一个原始数据集分割的功能，将按照要求分割后
+输出训练集合和测试集，一遍于后边算法精确度的测量。数据导入模块是将以文件形式的数据记录集合结构化，数据执行导入之后将会被按照数据存储模块提供的功能存放，可以是数
+据库存储方式，直接内存存储方式，或者文件的存储方式。方便后边执行推荐算法以及精确度测量时候使用。
+\end_layout
+
+\begin_layout Standard
+推荐算法模块是TinyRec最核心的功能。它可以针对结构化的数据记录进行关联挖掘。在基于用户和基于物品的推荐算法中，它负责的功能就是用户之间、物品之间的相似度计
+算。评分预测模块就是根据获取到的这些关联，来进行预测工作。评分预测模块就是根据要求来给出特定用户对特定物品的评分。
+\end_layout
+
+\begin_layout Standard
+精确度测量模块负责把测试数据集应用于推荐算法模块所生成的预测模型中，通过预测模型给出的预测结果和训练集数据比较来计算精确度。精确度计算模块为提供具体的精确度计算
+方法，本文实现了RMSE和MAE这两种方法。交叉验证模块提供交叉验证的功能，它与精确度计算模块共同提供衡量算法精确度的功能。
+\end_layout
+
+\begin_layout Section
+系统体系结构设计
+\end_layout
+
+\begin_layout Standard
+TinyRec的系统架构如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:TinyRec的系统架构图"
+
+\end_inset
+
+所示。TinyeRec在与数据存储通信是通过DAO层，各个模块只要调用其提供的API即可传输数据而不用考虑具体实现。最初数据集由数据导入模块通过DAO层导入数据
+库中或内存中，目前TinyRec使用Redis数据库。其中各个模块直接并不直接联系，计算得到的必须提供给其他模块的中间数据一般都放在数据库中，其他模块再自己获取
+。比如数据导入模块将数据结构化存入Redis中，然后相似度计算模块再从中获取每一条记录。图中每个模块的参数配置都从参数配置模块中获取。推荐算法可以自由地在基于用
+户和基于物品算法中选取，这些也可以通过配置模块来修改。评分预测模块输出的预测结果可以用于计算算法的精确度量。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename 系统架构图.eps
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:TinyRec的系统架构图"
+
+\end_inset
+
+TinyRec的系统架构图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+功能模块的设计与实现
+\end_layout
+
+\begin_layout Subsection
+数据预处理模块（分割、导入） 
 \end_layout
 
 \begin_layout Subsection
@@ -2652,11 +2792,7 @@ name "tab:评分分割例子"
 \end_layout
 
 \begin_layout Subsection
-数据预处理模块（分割、导入） 
-\end_layout
-
-\begin_layout Subsection
-精确度验证模块 
+精确度测量模块 
 \end_layout
 
 \begin_layout Subsection
@@ -2664,7 +2800,7 @@ Benchmark模块
 \end_layout
 
 \begin_layout Subsection
-框架配置模块 
+参数配置模块 
 \end_layout
 
 \begin_layout Section
