@@ -754,7 +754,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\bar{r_{u}}$
+\begin_inset Formula $\overline{r_{u}}$
 \end_inset
 
 
@@ -781,7 +781,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\bar{r_{i}}$
+\begin_inset Formula $\overline{r_{i}}$
 \end_inset
 
 
@@ -2784,16 +2784,17 @@ TinyRec的系统架构图
 \end_layout
 
 \begin_layout Subsection
-数据预处理模块（分割、导入） 
+数据预处理模块 
 \end_layout
 
 \begin_layout Subsubsection
-数据分割模块
+数据分割
 \end_layout
 
 \begin_layout Standard
 在使用数据集之前，必须先将原始数据集进行分割为训练集和测试集。数据集一般储存为文本文件，每一行代表一个记录：用户对物品的一次评分，数据预处理模块的目的就是提取每
-一条记录结构化为(userid,itemid,rate)的元组，分别表示为用户的id，物品的id和物品的评分，本文接下去也使用这种表述。
+一条记录结构化为(userid,itemid,rate)的元组，分别表示为用户的id，物品的id和物品的评分，本文接下去也使用这种表述。从数据库设计角度来看us
+erid,itemid是主键，也就是一个用户给一个物品只能有一条评分。
 \end_layout
 
 \begin_layout Standard
@@ -3069,7 +3070,7 @@ end{python}
 \end_layout
 
 \begin_layout Subsubsection
-数据导入模块
+数据导入
 \end_layout
 
 \begin_layout Standard
@@ -3112,10 +3113,6 @@ name "fig:数据读取类图"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -3201,7 +3198,251 @@ end{python}
 \end_layout
 
 \begin_layout Subsection
+DAO模块
+\end_layout
+
+\begin_layout Standard
+DAO模块定义了存取或者获取数据的API，根据本推荐引擎TinyRec的需求，设计了如下API：
+\end_layout
+
+\begin_layout Standard
+put_a_record(userid, itemid,rating)
+\end_layout
+
+\begin_layout Standard
+存入具有userid的用户为具有itemid的物品给出评分rating的一条记录，即存入元组(userid,itemid,rating)。
+\end_layout
+
+\begin_layout Standard
+get_item_list_by_user(userid)
+\end_layout
+
+\begin_layout Standard
+通过userid获取用户他所有的评分记录，对应于用户
+\begin_inset Formula $u$
+\end_inset
+
+评价的所有物品集合
+\begin_inset Formula $I_{u}$
+\end_inset
+
+。该函数返回一组列表，列表里的每个元素是一个元组(itemid,rating),表示用户为具有itemid的物品的一条评分记录。
+\end_layout
+
+\begin_layout Standard
+get_user_list_by_item(itemid)
+\end_layout
+
+\begin_layout Standard
+通过itemid获取这个物品的得到的所有评分记录，对应于给物品
+\begin_inset Formula $i$
+\end_inset
+
+评价的所有用户集合
+\begin_inset Formula $U_{i}$
+\end_inset
+
+。该函数返回一组列表，列表里的每个元素是一个元组(userid,rating),表示具有userid的用户给其的一条评分记录。
+\end_layout
+
+\begin_layout Standard
+get_rate(userid,itemid)
+\end_layout
+
+\begin_layout Standard
+返回具有userid的用户给具有itemid的物品的一条评分记录，如果这条记录不存在，即用户未能给这个物品评分那么返回None。
+\end_layout
+
+\begin_layout Standard
+get_user_rating_num(userid)
+\end_layout
+
+\begin_layout Standard
+返回具有userid的用户评价的物品数量，即
+\begin_inset Formula $\left|I_{u}\right|$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+get_item_rating_num(userid)
+\end_layout
+
+\begin_layout Standard
+返回具有itemid的物品得到用户的评价的数量,即
+\begin_inset Formula $\left|U_{i}\right|$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+put_item_sim(itemid,otheritemid,sim)
+\end_layout
+
+\begin_layout Standard
+存入具有itemid的物品与具有otheritemid物品的相似度。
+\end_layout
+
+\begin_layout Standard
+get_item_sim_list(itemid,k,bydesc)
+\end_layout
+
+\begin_layout Standard
+返回与具有itemid最相似的前k个物品的列表，列表每个元素是一个元组(otheritemid,sim)，分别表示某个具有otheritemid的物品与当前物品
+的相似度sim。bydesc表示是否按照相似度从大到小排列。
+\end_layout
+
+\begin_layout Standard
+get_sim_between_two_items(itemid,otheritemid)
+\end_layout
+
+\begin_layout Standard
+返回itemid与otheritemid的相似度
+\end_layout
+
+\begin_layout Standard
+put_user_sim(userid,otheruser,sim)
+\end_layout
+
+\begin_layout Standard
+存入具有userid的用户与具有otheruser的用户之间的相似度。
+\end_layout
+
+\begin_layout Standard
+get_user_sim_list(userid,k,bydesc )
+\end_layout
+
+\begin_layout Standard
+返回与具有userid最相似的前k个用户的列表，列表每个元素是一个元组(otheruser,sim)，分别表示某个具有otheruserid的用户与当前用户的相
+似度sim。bydesc表示是否按照相似度从大到小排列。
+\end_layout
+
+\begin_layout Standard
+get_sim_between_two_users(userid,otheritemid)
+\end_layout
+
+\begin_layout Standard
+返回userid与otheruserid的相似度
+\end_layout
+
+\begin_layout Standard
+get_user_rating_mean(userid)
+\end_layout
+
+\begin_layout Standard
+返回用户的平均评分，即
+\begin_inset Formula $\overline{r_{u}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+get_item_rating_mean(item)
+\end_layout
+
+\begin_layout Standard
+返回物品的平均评分，即
+\begin_inset Formula $\overline{r_{i}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+由于使用的是python语言，上述函数返回的数据结构，如列表、元组均为python提供的数据结构。
+\end_layout
+
+\begin_layout Subsection
+数据存储模块
+\end_layout
+
+\begin_layout Standard
+本模块即通过DAO模块存储数据用于为TinyRec提供临时或者永久的数据存储功能。在整个执行推荐的流程中，它需要存储基本的数据记录，计算得出的相似度等。Tiny
+Rec支持使用内存数据库，关系数据库或者Nosql数据库等。根据推荐引擎的特点，不难得出数据存储必须满足下列要求：
+\end_layout
+
+\begin_layout Enumerate
+由于计算相似度的需要，TinyRec需要从从数据存储处快速获取一条或者多条用户的评分记录，计算完毕之后将相似度存入。因此应当尽量保证低延迟，减少不必要的系统调用
+与IO时间，让计算机CPU资源得到充分利用。
+\end_layout
+
+\begin_layout Enumerate
+需要被存储的数据有不同的特点，比如某个物品的相似度存储需要按照大小有序排列，但是也要能够快速获取两个物品、两个用户之间的相似度。而用户与物品的评分记录可以无序存
+放。
+\end_layout
+
+\begin_layout Standard
+其中内存数据库相对于传统的关系数据库显然拥有更低的延迟与吞吐量，而支持SQL的关系数据库可以很容易地满足第二点要求。另外，本文使用的数据集较小，可以放入内存计算
+。综合考虑，本文采用基于内存的，提供数据持久化功能的开源数据库Redis。Redis提供了许多数据结构，非常方便用户使用。根据不同数据的特点，本文如下设计数据的
+存储结构：
+\end_layout
+
+\begin_layout Enumerate
+评分记录的存储。首先，为每个用户建立一个hashset
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+本章节提到的数据结构均为Redis提供的数据结构
+\end_layout
+
+\end_inset
+
+，用于存储该用户的评分记录。该hashset由用户id唯一标识，hashset内部存储(itemid,rating)的key-value对。在使用时，Redis
+可以在
+\begin_inset Formula $O(1)$
+\end_inset
+
+时间内根据给定用户id以及物品id获得或者存入对应的评分，也可以在
+\begin_inset Formula $O(\left|I_{u}\right|)$
+\end_inset
+
+时间内获取用户评分的所有评分记录。为了方便地获取某个物品得到的评分记录，也为每个物品建立一个hashset，由物品id唯一标识，存储(userid,rating
+)的评分记录，类似的Redis可以在
+\begin_inset Formula $O(\left|U_{i}\right|)$
+\end_inset
+
+时间内获取该物品的得到用户的所有评分记录。
+\end_layout
+
+\begin_layout Enumerate
+相似度的存储。为每个用户建立一个sorted set，存储(userid,sim)的key-value对，sim表示该用户与其他某个用户的相似度。为了节省空间的
+需要，我们可以只存储与该用户最相似的前
+\begin_inset Formula $K$
+\end_inset
+
+个用户，
+\begin_inset Formula $K$
+\end_inset
+
+值大叫其实就是邻域的大小。Redis可以在
+\begin_inset Formula $O(logK)$
+\end_inset
+
+时间内插入一条相似度记录，在
+\begin_inset Formula $O(K)$
+\end_inset
+
+时间内取出按照相似度大小排列的一组用户列表，而根据两个用户id获取相似度只要
+\begin_inset Formula $O(1)$
+\end_inset
+
+的时间。同样的我们也为每个物品建立相似的表，这里就不再赘述。
+\end_layout
+
+\begin_layout Subsection
 相似度模块
+\end_layout
+
+\begin_layout Standard
+本模块计算用户之间或者物品之间的相似度。首先通过DAO获取用户的评分记录，再利用稀疏向量库来计算相似度。
+\end_layout
+
+\begin_layout Subsubsection
+稀疏向量运算库
 \end_layout
 
 \begin_layout Subsection
