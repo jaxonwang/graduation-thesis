@@ -3434,15 +3434,189 @@ status open
 \end_layout
 
 \begin_layout Subsection
+参数配置模块 
+\end_layout
+
+\begin_layout Standard
+参数配置模块接收用户的配置为输入，并为其他模块提供所需的参数，让其他模块根据设置类自动调整配置。所有的配置均存放在configure文本文件中，采用同用的ini
+格式
+\begin_inset CommandInset citation
+LatexCommand cite
+key "INI_filewiki"
+
+\end_inset
+
+，部分配置内容如下：
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[global]
+\end_layout
+
+\begin_layout Plain Layout
+
+storage = redis 	;The place where data are stored during processing.
+\end_layout
+
+\begin_layout Plain Layout
+
+multithread = auto 	;Enable multi-thread optimization.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+[collaborative filting] 
+\end_layout
+
+\begin_layout Plain Layout
+
+model = user-based 	；Using user-based model
+\end_layout
+
+\begin_layout Plain Layout
+
+similarity = pearson 	;Chosing similarity
+\end_layout
+
+\begin_layout Plain Layout
+
+significance_weight = 80 ;Threshold for the significance weighting
+\end_layout
+
+\begin_layout Plain Layout
+
+neighborsize_K = 140
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+参数配置模块类图见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:类Config"
+
+\end_inset
+
+。类的初始化参数是配置文件的路径，在初始化时读取参数配置并且将其以字典的形式保存。validater方法用于验证配置文件各个属性的有效性质。由于参数在运行时候可
+能改变，因此需要其他模块实现回调函数来更新模块内部的参数，其他模块通过调用register()将回调函数注册，方便调用apply_changes()更新配置时候
+模块内部参数也得到更新。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 配置模块类图.eps
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:类Config"
+
+\end_inset
+
+类Config
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 相似度模块
 \end_layout
 
 \begin_layout Standard
-本模块计算用户之间或者物品之间的相似度。首先通过DAO获取用户的评分记录，再利用稀疏向量库来计算相似度。
+本模块计算用户之间或者物品之间的相似度。本模块可以看作一个相似度计算的过程，首先通过DAO获取用户的评分记录，再利用稀疏向量库来计算相似度，最终将数据保存用于接
+下来的预测。相似度模块时序图见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:相似度模块时序图"
+
+\end_inset
+
+，All_similarity计算所有个体之间的相似度，调用K_nearest获取某个的邻域，也就是最相似的一K个个体。TwoSimilarity计算给定两个个
+体之间的相似度，SparseVector是稀疏向量库给出的类，可用于计算相似度，SimilarityAlgorithm则是章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:相似度度量方法"
+
+\end_inset
+
+描述的相似度计算方法之一。
 \end_layout
 
-\begin_layout Subsubsection
-稀疏向量运算库
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 相似度模块时序图.eps
+	width 100col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:相似度模块时序图"
+
+\end_inset
+
+相似度模块时序图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+模块在调用All_similarity之前，会从配置模块中获取
 \end_layout
 
 \begin_layout Subsection
@@ -3451,14 +3625,6 @@ status open
 
 \begin_layout Subsection
 精确度测量模块 
-\end_layout
-
-\begin_layout Subsection
-Benchmark模块 
-\end_layout
-
-\begin_layout Subsection
-参数配置模块 
 \end_layout
 
 \begin_layout Section
@@ -3471,6 +3637,10 @@ item-based协同过滤
 
 \begin_layout Subsection
 user-based协同过滤 
+\end_layout
+
+\begin_layout Subsection
+稀疏向量运算库
 \end_layout
 
 \begin_layout Subsection
