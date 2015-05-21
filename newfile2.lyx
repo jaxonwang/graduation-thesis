@@ -2720,8 +2720,8 @@ name "fig:系统总功能模块图"
 \end_layout
 
 \begin_layout Standard
-精确度测量模块负责把测试数据集应用于推荐算法模块所生成的预测模型中，通过预测模型给出的预测结果和训练集数据比较来计算精确度。精确度计算模块为提供具体的精确度计算
-方法，本文实现了RMSE和MAE这两种方法。交叉验证模块提供交叉验证的功能，它与精确度计算模块共同提供衡量算法精确度的功能。
+精确度测量模块负责把测试数据集应用于精确度计算推荐算法模块所生成的预测模型中，通过预测模型给出的预测结果和训练集数据比较来计算精确度。精确度计算模块为提供具体的
+精确度计算方法，本文实现了RMSE和MAE这两种方法。交叉验证模块提供交叉验证的功能，它与精确度计算模块共同提供衡量算法精确度的功能。
 \end_layout
 
 \begin_layout Section
@@ -3199,6 +3199,13 @@ end{python}
 
 \begin_layout Subsection
 DAO模块
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:DAO模块"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3475,7 +3482,7 @@ multithread = auto 	;Enable multi-thread optimization.
 
 \begin_layout Plain Layout
 
-[collaborative filting] 
+[collaborative filtering] 
 \end_layout
 
 \begin_layout Plain Layout
@@ -3515,9 +3522,9 @@ reference "fig:类Config"
 
 \end_inset
 
-。类的初始化参数是配置文件的路径，在初始化时读取参数配置并且将其以字典的形式保存。validater方法用于验证配置文件各个属性的有效性质。由于参数在运行时候可
-能改变，因此需要其他模块实现回调函数来更新模块内部的参数，其他模块通过调用register()将回调函数注册，方便调用apply_changes()更新配置时候
-模块内部参数也得到更新。
+。为了使配置文件只被读一次以及配置参数只在内存中保存一份，对类Config使用单例模式，保证全局中只有一个Config的实例。类的初始化参数是配置文件的路径，在
+初始化时读取参数配置并且将其以字典的形式保存。validater方法用于验证配置文件各个属性的有效性质。由于参数在运行时候可能改变，因此需要其他模块实现回调函数
+来更新模块内部的参数，其他模块通过调用register()将回调函数注册，方便调用apply_changes()更新配置时候模块内部参数也得到更新。
 \begin_inset Float figure
 wide false
 sideways false
@@ -3556,6 +3563,13 @@ name "fig:类Config"
 
 \begin_layout Subsection
 相似度模块
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:相似度模块"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3567,8 +3581,8 @@ reference "fig:相似度模块时序图"
 
 \end_inset
 
-，All_similarity计算所有个体之间的相似度，调用K_nearest获取某个的邻域，也就是最相似的一K个个体。TwoSimilarity计算给定两个个
-体之间的相似度，SparseVector是稀疏向量库给出的类，可用于计算相似度，SimilarityAlgorithm则是章节
+，过程All_similarity计算所有个体之间的相似度，调用K_nearest获取某个体的邻域，也就是最相似的K个个体。TwoSimilarity计算给定两
+个个体之间的相似度，SparseVector是稀疏向量库给出的类，SimilarityAlgorithm则是章节
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:相似度度量方法"
@@ -3616,15 +3630,314 @@ name "fig:相似度模块时序图"
 \end_layout
 
 \begin_layout Standard
-模块在调用All_similarity之前，会从配置模块中获取
+模块在调用All_similarity之前，会从配置模块中获取配置来决定使用的算法，使用基于物品的或者是基于用户的，使用何种相似度方法等，以及其他算法有关参数，
+如邻域K值大小。下边代码给出了算法选择和参数选择的逻辑：
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def get_config_and_set():
+\end_layout
+
+\begin_layout Plain Layout
+
+    model = Config().configdict['collaborative_filtering']['model']
+\end_layout
+
+\begin_layout Plain Layout
+
+    #item-based or user-based
+\end_layout
+
+\begin_layout Plain Layout
+
+    if model == "user-based":
+\end_layout
+
+\begin_layout Plain Layout
+
+        all_simlarity = all_user_similarity
+\end_layout
+
+\begin_layout Plain Layout
+
+    elif model == "item-based":
+\end_layout
+
+\begin_layout Plain Layout
+
+        all_simlarity = all_item_similarity
+\end_layout
+
+\begin_layout Plain Layout
+
+    else:
+\end_layout
+
+\begin_layout Plain Layout
+
+        raise Exception("You should never get here, badly configed.")
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+过程TwoSimilarity将两个个体的评分记录转化为稀疏向量，即SparseVector的实例，再使用SimilarityAlgorithm获得两个向量之间
+的相关度，即个体之间的相似度。在获得相似度之后，还需要根据算法选择的情况对相似度做一些修正，比如使用章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:重要性权重（Significance-Weighting）"
+
+\end_inset
+
+描述的重要性权重对交集过小的两个个体进行惩罚。K_nearest过程寻找给定的个体的邻域，方法是分别调用TwoSimilarit计算给定个体与其他个体的相似度，
+保存结果排序并筛选出前K个个体返回。
 \end_layout
 
 \begin_layout Subsection
 预测模块 
 \end_layout
 
+\begin_layout Standard
+预测模块的使用前要求个体之间的相似度已经被计算完毕，本模块相对来说比较简单，类似于相似度模块，也可以看作是一个过程，具体流程见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:预测模块流程"
+
+\end_inset
+
+。其中最主要的是评分预测算法，TinyRec中采用的是章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:用K邻近算法预测"
+
+\end_inset
+
+中的算法，其实现见章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:knn预测"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 预测模块流程图.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:预测模块流程"
+
+\end_inset
+
+预测模块流程图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+预测模块选择算法和设置参数的方式与相似度模块相同：从参数模块获取并设置。以基于用户的协同过滤算法为例，预测模块 通过DAO获取给定用户的邻域，调用API：get
+_user_sim_list（见章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:DAO模块"
+
+\end_inset
+
+）。返回的邻域被表示为按照相似度从大到小排列的一组列表，表内每一项为其他用户的id与相似度值，这些都作为给出预测的依据。预测模块对外提供predict_rate
+_by_user_and_item接口，可供其他模块如精确度测量模块使用，其定义如下:
+\end_layout
+
+\begin_layout Standard
+predict_rate_by_user_and_item(userid,itemid)
+\end_layout
+
+\begin_layout Standard
+函数返回的对于具有userid的用户对具有itemid的物品的预测，如果用户已经为其评过分，则抛出异常。
+\end_layout
+
 \begin_layout Subsection
 精确度测量模块 
+\end_layout
+
+\begin_layout Subsubsection
+精确度计算
+\end_layout
+
+\begin_layout Standard
+精确度计算旨在给定数据集合计算预测算法的精确度，其相关的主要类为Accuracy。见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:精确度计算相关类图"
+
+\end_inset
+
+。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 精确度模块.eps
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:精确度计算相关类图"
+
+\end_inset
+
+精确度计算相关类图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Accuracy类初始化为测试数据集的路径，通常测试数据集由数据导入模块中的数据分割工具产生。Accuracy类依赖与其他两个模块中的类，数据模块中的Reade
+r和评分预测模块中的Predictor，类图中只显示Accuracy调用他们的方法。类Accuracy调用Reader的get_next来读取测试数据集中的一条
+评分记录，这条记录给出了某个用户对某个物品的一次评分，Accuracy内部方法get_bias就是要把这个记录的评分作为真实值与预测值比较，得到偏差。要获取预测
+值，get_bias内部调用了Predictor中的predict_rate_by_user_and_item方法来获取预测值。没一条记录的偏差将会被保存用于计
+算精确度，目前TinyRec实现的度量方法有MAE与RMSE，具体实现见章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:精确度评估"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+交叉验证
+\end_layout
+
+\begin_layout Standard
+交叉验证的相关类图见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:交叉验证相关类图"
+
+\end_inset
+
+。CrossValidate类的初始化参数为datasetpath，是原始数据的路径。CrossValidate类需要依赖数据导入模块中的数据分割工具来对原始数
+据进行分割，还依赖于相似度模块（图中的Similarity包）和计算精确度的Accuracy类。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 精确度模块.eps
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:交叉验证相关类图"
+
+\end_inset
+
+交叉验证相关类图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:交叉验证与数据分割"
+
+\end_inset
+
+描述，使用k-fold方法的交叉验证需要对原有数据集合做k次的分割，然后进行k次的验证，也就是说要经过k次的计算相似度->计算精确度这一过程。虽然个体两两之间的
+相似度可以只计算一次，然后k次分别选择在特定测试数据集中的邻域，但是这样得在相似度模块中作出修改，增加模块直接的耦合性，违背原有模块设计的初衷，而且为了简单起见
+，CrossValidate将会k次调调用Similarity模块计算相似度再计算精确度。具体的k-fold交叉验证实现见章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:交叉验证"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -3649,6 +3962,13 @@ user-based协同过滤
 
 \begin_layout Subsubsection
 cos 
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:cos"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -3663,20 +3983,188 @@ spearman
 重要性权重 
 \end_layout
 
+\begin_layout Standard
+根据章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:重要性权重（Significance-Weighting）"
+
+\end_inset
+
+给出的公式，我们很容易计算两个个体之间的重要性权重。对相似度做重要性权重的修正在相似度模块的TwoSimilarity过程中执行，见章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:相似度模块"
+
+\end_inset
+
+。以基于物品的协同过滤算法为例，下面代码给出了其简化的实现：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def two_smilarity(usera,userb):
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    sparseveca = to_sparse_vector(usera)
+\end_layout
+
+\begin_layout Plain Layout
+
+    sparsevecb = to_sparse_vector(userb)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    sim = vector_correlation_algorithm(sparseveca,sparsevecb)
+\end_layout
+
+\begin_layout Plain Layout
+
+    if significance_weight_enabled():
+\end_layout
+
+\begin_layout Plain Layout
+
+       i = len(set([i for i,v in usera]) & set([i for i,v userb]))
+\end_layout
+
+\begin_layout Plain Layout
+
+        if i < significance_weight:
+\end_layout
+
+\begin_layout Plain Layout
+
+            sim *= float(i) / float(significance_weight)
+\end_layout
+
+\begin_layout Plain Layout
+
+    return sim 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+two_smilarity函数计算两个用户的usera,userb的相似度，再使用重要性权重进行修正。在第6行获取了两个向量之间的关联度，即用户之间的相似度，第
+8行计算两个用户共同评价的物品数即
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left|I_{a}\cap I_{b}\right|$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+。代码[i for i,v in usera]表示用户a的评分过物品列表，表内每一项为物品的id，再将这个列表转化为python自带的数据结构set，两个set
+取交集后使用函数len获取其交集大小。最后再比较交集大小i是否符合需要修正的要求，如果小于significance_weight值那么相似度sim需要乘以
+\begin_inset Formula $\frac{i}{significance\_weight}$
+\end_inset
+
+。交集大小可以用类似章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:类Config"
+
+\end_inset
+
+的归并两个列表的方式来实现，方便起见，给出的实现使用python内置的set结构，其实两者本质上没有区别。
+\end_layout
+
 \begin_layout Subsection
 默认评分 
 \end_layout
 
 \begin_layout Subsection
 knn预测 
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:knn预测"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-精确度评估 
+精确度评估
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:精确度评估"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 交叉验证
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:交叉验证"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+并行化
 \end_layout
 
 \begin_layout Chapter
