@@ -1463,6 +1463,13 @@ name "sub:相似度度量方法"
 
 \begin_layout Subsubsection
 余弦相似度
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:余弦相似度"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1609,6 +1616,13 @@ reference "sub:用K邻近算法预测"
 
 \begin_layout Subsubsection
 pearson相关系数
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:pearson相关系数"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1617,13 +1631,41 @@ rson相关系数，其中
 \begin_inset Formula $\sigma$
 \end_inset
 
-表示为数据的标准差：
+表示为数据的标准差,
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mu$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+表示均值：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-Pearson(x,y)=\frac{\sum(x,y)}{\sigma_{x}\sigma_{y}}\label{eq:pearson base}
+Pearson(x,y)=\frac{E\text{(}(x-\mu_{x})(y-\mu_{y}))}{\sigma_{x}\sigma_{y}}\label{eq:pearson base}
 \end{equation}
 
 \end_inset
@@ -1736,7 +1778,7 @@ earman秩相关系数计算时先把变量X，Y成对的值从哦按照从小到
 为共同评分的个数。则spearman秩相关系数为：
 \begin_inset Formula 
 \begin{equation}
-w_{uv}=Spearman(u,v)=\frac{\stackrel[i=1]{m}{\sum}(rank_{u,i}-\overline{rank_{u}})\cdotp(rank_{v,i}-\overline{rank_{v}})}{\sigma_{u}\sigma_{v}}\label{eq:spearman user base}
+w_{uv}=Spearman(u,v)=\frac{\sum_{i=1}^{m}(rank_{u,i}-\overline{rank_{u}})\cdotp(rank_{v,i}-\overline{rank_{v}})}{\sigma_{u}\sigma_{v}}\label{eq:spearman user base}
 \end{equation}
 
 \end_inset
@@ -1748,7 +1790,7 @@ w_{uv}=Spearman(u,v)=\frac{\stackrel[i=1]{m}{\sum}(rank_{u,i}-\overline{rank_{u}
 相似的，基于物品的协同过滤算法中，spearman秩相关系数为：
 \begin_inset Formula 
 \begin{equation}
-w_{ij}=Spearman(i,j)=\frac{\stackrel[u=1]{m}{\sum}(rank_{i,u}-\overline{rank_{i}})\cdotp(rank_{j,u}-\overline{rank_{j}})}{\sigma_{i}\sigma_{j}}\label{eq:spearman user base-1}
+w_{ij}=Spearman(i,j)=\frac{\sum_{i=1}^{m}(rank_{i,u}-\overline{rank_{i}})\cdotp(rank_{j,u}-\overline{rank_{j}})}{\sigma_{i}\sigma_{j}}\label{eq:spearman user base-1}
 \end{equation}
 
 \end_inset
@@ -1854,6 +1896,13 @@ key "706157,JonathanLHerlocker1999An"
 
 \begin_layout Subsubsection
 均值中心化
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:均值中心化"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2639,7 +2688,43 @@ name "tab:评分分割例子"
 \end_layout
 
 \begin_layout Chapter
-一个基于协同过的评分预测引擎TinyRec的实现 
+一个基于协同过[global]
+\end_layout
+
+\begin_layout Standard
+storage = redis 	;The place where data are stored.
+\end_layout
+
+\begin_layout Standard
+multithread = auto 	;Enable multi-thread optimization.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+[collaborative filtering] 
+\end_layout
+
+\begin_layout Standard
+model = user-based 	；Using user-based model
+\end_layout
+
+\begin_layout Standard
+similarity = pearson 	;Chosing similarity
+\end_layout
+
+\begin_layout Standard
+significance_weight = 80 ;Threshold for the significance weighting
+\end_layout
+
+\begin_layout Standard
+neighborsize_K = 140
+\end_layout
+
+\begin_layout Chapter
+的评分预测引擎TinyRec的实现 
 \end_layout
 
 \begin_layout Section
@@ -2813,8 +2898,8 @@ reference "sub:交叉验证与数据分割"
 
 \end_inset
 
-描述到分割数据时候，尽量为每个用户分割到足够的训练样本，这样才能有足够的信息产生推荐。因此为了方便让每个用户的数据足够，首先将对数据集中的每个记录按照useri
-d排序，每K条进行一次随机排列，放入
+描述到分割数据时候，尽量为每个用户分割到足够的训练样矩阵本，这样才能有足够的信息产生推荐。因此为了方便让每个用户的数据足够，首先将对数据集中的每个记录按照use
+rid排序，每K条进行一次随机排列，放入
 \begin_inset Formula $K$
 \end_inset
 
@@ -2962,7 +3047,51 @@ def split(infile, outdir, k_fo):
 
 \begin_layout Plain Layout
 
-        rating_list_for_a_user.append(line)
+        rating_list[global]
+\end_layout
+
+\begin_layout Plain Layout
+
+storage = redis 	;The place where data are stored.
+\end_layout
+
+\begin_layout Plain Layout
+
+multithread = auto 	;Enable multi-thread optimization.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+[collaborative filtering] 
+\end_layout
+
+\begin_layout Plain Layout
+
+model = user-based 	；Using user-based model
+\end_layout
+
+\begin_layout Plain Layout
+
+similarity = pearson 	;Chosing similarity
+\end_layout
+
+\begin_layout Plain Layout
+
+significance_weight = 80 ;Threshold for the significance weighting
+\end_layout
+
+\begin_layout Plain Layout
+
+neighborsize_K = 140
+\end_layout
+
+\begin_layout Plain Layout
+
+_for_a_user.append(line)
 \end_layout
 
 \begin_layout Plain Layout
@@ -3169,7 +3298,7 @@ while True:
 
 \begin_layout Plain Layout
 
-    to_Redis(record)
+    to_Redis(record)矩阵
 \end_layout
 
 \begin_layout Plain Layout
@@ -3457,61 +3586,39 @@ key "INI_filewiki"
 \end_layout
 
 \begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
 [global]
 \end_layout
 
-\begin_layout Plain Layout
-
-storage = redis 	;The place where data are stored during processing.
+\begin_layout Standard
+storage = redis 	;The place where data are stored.
 \end_layout
 
-\begin_layout Plain Layout
-
+\begin_layout Standard
 multithread = auto 	;Enable multi-thread optimization.
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 
 \end_layout
 
-\begin_layout Plain Layout
-
+\begin_layout Standard
 [collaborative filtering] 
 \end_layout
 
-\begin_layout Plain Layout
-
+\begin_layout Standard
 model = user-based 	；Using user-based model
 \end_layout
 
-\begin_layout Plain Layout
-
+\begin_layout Standard
 similarity = pearson 	;Chosing similarity
 \end_layout
 
-\begin_layout Plain Layout
-
+\begin_layout Standard
 significance_weight = 80 ;Threshold for the significance weighting
 \end_layout
 
-\begin_layout Plain Layout
-
+\begin_layout Standard
 neighborsize_K = 140
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -3956,12 +4063,369 @@ user-based协同过滤
 稀疏向量运算库
 \end_layout
 
+\begin_layout Standard
+协同过滤的一个重要特征就是用户-物品矩阵非常地稀疏，对于一个用户往往只评价了物品空间中的一个很小的一部分，在计算相似度时候，基于用户的协同过滤和基于物品的协同过
+滤分别需要把用户评分记录和物品得到的评分记录转换成向量的形式，以便计算两个向量之间的相关性，作为用户之间或者物品之间的相似度。由于转化成的向量十分稀疏，只有很小
+一部分的项有有效值，所以用普通的向量计算方式将会十分耗费空间和时间。注意到，将用户评分记录和物品评分记录转换为向量时，以基于用户的协同过滤为例，把用户没有参与过
+评分的物品对应的那一项设置为零，这里用到了默认评分方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "39360168"
+
+\end_inset
+
+，这种方法对与cosine关联度没有影响，但是对于pearson和spearman方法会更好地体现用户之间的相似度（共同评分的项越小，他们越不相似），本文接下来
+都将使用这种方法。由于python目前还没有比较好的稀疏向量运算的库，本文也用python设计并实现了一个稀疏向量运算库，打包成python包。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 悉数向量.eps
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:系数向量类SparseVector类图"
+
+\end_inset
+
+稀疏向量类SparseVector类图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:系数向量类SparseVector类图"
+
+\end_inset
+
+为稀疏向量库的稀疏向量类SparseVector的类图，从图中我们可以看出，类SparseVector有两个成员变量：vector_list和vector_le
+ngth。vector_length表示这个稀疏向量的长度，在基于用户的协同过滤算法中，这个长度的值也就是物品空间的大小，即总物品数。而vector_list则
+是稀疏向量存储方式的关键。vector_list是一个列表，表中的项为一个元组
+\begin_inset Formula $(index,value)$
+\end_inset
+
+，表示为该向量在index下标处有值value，没有表示的其他值为0。如向量(2,0,5,3,0,6)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+下标从1开始，下同
+\end_layout
+
+\end_inset
+
+可以存储如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:悉数向量表示"
+
+\end_inset
+
+的方式。这种实现方式类似于稀疏矩阵的一种存储方式。python数据结构list的实现方式其实是个数组，相对与用链表存储的方式，对于稀疏向量不容易添加新的非零项，
+但是更具我们的需求出发，用户向量或者物品向量一般在计算相似度过程中将不会改变，方便起见，就使用python自带的数据结构list。 
+\end_layout
+
+\begin_layout Standard
+稀疏向量的类在初始化时，接受三个参数：indices,values,vector_len。其中vector_len表示该限量的长度，将会被存在内部成员vecto
+r_length中。indices，values为两个等长的列表，indices表示该向量的下标列表，值列表，两个列表的每一项一一对应。如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:悉数向量表示"
+
+\end_inset
+
+中的向量在初始化时传入的这两个列表可以分别是[1,3,4,6]和[2,5,3,4]。下列代码给出了初始化的实现方式：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+class SparseVector:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, indices, values, vector_len):
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.vector_list = []
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.vector_length = vector_len
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        if len(indices) != len(values):
+\end_layout
+
+\begin_layout Plain Layout
+
+            raise ValueError("Tow list length do not match.")
+\end_layout
+
+\begin_layout Plain Layout
+
+        for i in range(len(indices)):
+\end_layout
+
+\begin_layout Plain Layout
+
+            if indices[i] > vec_len:
+\end_layout
+
+\begin_layout Plain Layout
+
+                raise ValueError("Index exceed the vector length.")
+\end_layout
+
+\begin_layout Plain Layout
+
+            self.vector_list.append((indices[i],values[i]))
+\end_layout
+
+\begin_layout Plain Layout
+
+        vl = self.vector_list
+\end_layout
+
+\begin_layout Plain Layout
+
+        vl.sort(key = lambda vl:vl[0])
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+其中代码第3行的__init__方法就是python中的构造函数。第4行初始化vector_list为一个空的列表。第12行将indices，values中的项
+一一对应，追加到vector_list中。第13～14行将vector_list中的项按照下标排序，以便进行后续的向量运算。向量的运算主要有加法和点乘运算，其思
+路类似于归并排序的归并过程
+\begin_inset CommandInset citation
+LatexCommand cite
+key "katajainen1996practical"
+
+\end_inset
+
+：对两个vector_list已经按照下标排好序的稀疏向量，将vector_list看作队列，若队列首部项大小不等，则小的那个项出队，否则进行一次运算后出队。下
+列代码给出了稀疏向量点乘的一个例子：
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def multiply(sparsevector_a,sparsevector_b):
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    product = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    i,j = 0,0
+\end_layout
+
+\begin_layout Plain Layout
+
+    while i < len(sparsevector_a.vector_list) and j < len(sparsevector_b.vector_li
+st):
+\end_layout
+
+\begin_layout Plain Layout
+
+        index_x, value_x = sparsevector_a.vector_list[i]
+\end_layout
+
+\begin_layout Plain Layout
+
+        index_y, value_y = sparsevector_b.vector_list[j]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        if index_x > index_y:
+\end_layout
+
+\begin_layout Plain Layout
+
+            j += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+        elif index_x < index_y:
+\end_layout
+
+\begin_layout Plain Layout
+
+            i += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+        else:
+\end_layout
+
+\begin_layout Plain Layout
+
+            dot_product += value_x * value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+            i += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+            j += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   return dot_product
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 稀疏向量例子.eps
+	width 90col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:悉数向量表示"
+
+\end_inset
+
+稀疏向量的存储方式
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 相似度度量 
 \end_layout
 
+\begin_layout Standard
+我们可以利用已实现好的稀疏向量库来计算向量之间的相关性，即在推荐过程中个体之间的相似度。虽然稀疏向量库给出了一些基本的运算方法，但是不同相似度方法可能需要对每一
+项进行不同的处理，因此，在实现向量相似度时，有些地方必须直接对稀疏向量中的非零项进行操作。
+\end_layout
+
 \begin_layout Subsubsection
-cos 
+cos相关系数 
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:cos"
@@ -3971,12 +4435,1050 @@ name "sub:cos"
 
 \end_layout
 
-\begin_layout Subsubsection
-pearson 实现的方法 化简 
+\begin_layout Standard
+根据式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cos相似度"
+
+\end_inset
+
+，其实现代码如下：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def cosine_corelation(sparsevector_a,sparsevector_b):
+\end_layout
+
+\begin_layout Plain Layout
+
+    if sparsevector_a.vector_length != sparsevector_b.vector_length:
+\end_layout
+
+\begin_layout Plain Layout
+
+        raise ValueError("Different vector length.")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    sv_a_m = math.sqrt(sum([v * v for (i,v) in sparsevector_a.vector_list]))
+\end_layout
+
+\begin_layout Plain Layout
+
+    sv_b_m = math.sqrt(sum([v * v for (i,v) in sparsevector_b.vector_list]))
+\end_layout
+
+\begin_layout Plain Layout
+
+    dot_product = multiply(sparsevector_a,sparsevector_b)
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    return dot_product / (sv_a_m * sv_b_m)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+首先，第2行判断两个向量是否有相同的长度。在计算两个向量直接的cosine相关度时，需要获得其模的大小，第5～6行分别计算两个向量的模。[v *
+ v for (x,v) in sparsevector_a.
+ vector_list]表示向量中所有非零值的平方作为列表，函数sum则对该列表进行求和，假设两个向量分别为 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+，
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+，则此时已经得到
+\begin_inset Formula $\mathbf{x^{2}}$
+\end_inset
+
+，
+\begin_inset Formula $\mathbf{y^{2}}$
+\end_inset
+
+。在使用python自带的math包中的sprt函数分别对
+\begin_inset Formula $\mathbf{x^{2}}$
+\end_inset
+
+，
+\begin_inset Formula $\mathbf{y^{2}}$
+\end_inset
+
+开平方，得到所需的模。7行获取两个向量点乘结果，最终返回cosine相关度的值。
+\end_layout
+
+\begin_layout Standard
+章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:均值中心化"
+
+\end_inset
+
+中对cosine相关度方法进行修正，本文的实现方法为在相似度模块中TwoSimilarity过程先对两个个体进行中心化处理，然后直接调用cosine_corel
+ation进行计算，较为方便。中心化处理代码如下：
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def centralization(sparsevector):
+\end_layout
+
+\begin_layout Plain Layout
+
+    vec_sum = sum([v for (i,v) in sparsevector.vector_list]) 
+\end_layout
+
+\begin_layout Plain Layout
+
+	avg = vec_sum / len(sparsevector.vector_list)
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	for i in range(len(sparsevector.vector_list)):
+\end_layout
+
+\begin_layout Plain Layout
+
+		sparsevector.vector_list[i][1] -= avg
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+第2～3行获取该向量非零值的平均值，以基于用户的协同过滤为例，该平均值即用户的平均打分。第5～6行表示对向量中每个非零项做减去平均值的中心化处理。注意到spar
+sevector.vector_list[i][1]指的是vector_list中
+\begin_inset Formula $(index,value)$
+\end_inset
+
+对的value值。
+\end_layout
+
+\begin_layout Standard
+对于基于用户或者基于物品的不同协同方法，只需要正确地把用户评分记录或者物品得到的评分记录转化为SparseVector，再调用cosine_corelation
+函数计算相似度，cosine_corelation并不需要知道悉数向量具体表示的是用户还是物品，因此不用对不同算法作出不同的实现。下述pearson相关系数，s
+pearman相关系数都采用了这种设计方式。
 \end_layout
 
 \begin_layout Subsubsection
-spearman 
+pearson相关系数 
+\end_layout
+
+\begin_layout Standard
+我们可以直接使用章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:pearson相关系数"
+
+\end_inset
+
+中给出的式子来计算pearson相关系数 。本文使用另外一种更加易于实现的pearson 相关系数的形式，如式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pearson implemention"
+
+\end_inset
+
+，其中N为稀疏向量的长度：
+\begin_inset Formula 
+\begin{equation}
+Pearson(x,y)=\frac{\sum_{i=1}^{N}x_{i}y_{i}-\frac{\sum_{i=1}^{N}x_{i}\sum_{i=1}^{N}y_{i}}{N}}{\sqrt{(\sum_{i=1}^{N}x_{i}^{2}-\frac{(\sum_{i=1}^{N}x_{i})^{2}}{N})(\sum_{i=1}^{N}y_{i}^{2}-\frac{(\sum_{i=1}^{N}y_{i})^{2}}{N})}}\label{eq:pearson implemention}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+使用式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pearson implemention"
+
+\end_inset
+
+我们很容易在归并过程中计算
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sum_{i=1}^{N}x_{i}y_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}x_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}y_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}x_{i}^{2}$
+\end_inset
+
+和
+\begin_inset Formula $\sum_{i=1}^{N}y_{i}^{2}$
+\end_inset
+
+这五个值。下列代码给出了一个实现：
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def pearson_relation(sparsevector_a, sparsevector_b):
+\end_layout
+
+\begin_layout Plain Layout
+
+    if sparsevector_a.vector_length != sparsevector_b.vector_length:
+\end_layout
+
+\begin_layout Plain Layout
+
+        raise ValueError("Different vector length.")
+\end_layout
+
+\begin_layout Plain Layout
+
+    size = sparsevector_a.vector_length
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    Sum_x = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    Sum_y = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    Sum_xy = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    Sum_x2 = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    Sum_y2 = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    i,j = 0,0
+\end_layout
+
+\begin_layout Plain Layout
+
+    while i < len(sparsevector_a.vector_list) and j < len(sparsevector_b.vector_li
+st):
+\end_layout
+
+\begin_layout Plain Layout
+
+        index_x, value_x = sparsevector_a.vector_list[i]
+\end_layout
+
+\begin_layout Plain Layout
+
+        index_y, value_y = sparsevector_b.vector_list[j]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        if index_x > index_y:
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_y += value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_y2 += value_y * value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+            j += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+        elif index_x < index_y:
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_x += value_x
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_x2 += value_x * value_x
+\end_layout
+
+\begin_layout Plain Layout
+
+            i += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+        else:
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_y += value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_y2 += value_y * value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_x += value_x
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_x2 += value_x * value_x
+\end_layout
+
+\begin_layout Plain Layout
+
+            Sum_xy += value_x * value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+            i += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+            j += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    for it in range(i,len(sparsevector_a.vector_list)):
+\end_layout
+
+\begin_layout Plain Layout
+
+        Sum_x += value_x
+\end_layout
+
+\begin_layout Plain Layout
+
+        Sum_x2 += value_x * value_x
+\end_layout
+
+\begin_layout Plain Layout
+
+    for it in range(j,len(sparsevector_b.vector_list)):
+\end_layout
+
+\begin_layout Plain Layout
+
+        Sum_y += value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+        Sum_y2 += value_y * value_y
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    pearsonr = (Sum_xy - Sum_x * Sum_y / size) / 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+            math.sqrt((Sum_x2 - Sum_x * Sum_x / size) * (Sum_y2 - Sum_y *
+ Sum_y / size))
+\end_layout
+
+\begin_layout Plain Layout
+
+    return pearsonr
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在这段代码中
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sum_{i=1}^{N}x_{i}y_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}x_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}y_{i}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}x_{i}^{2}$
+\end_inset
+
+，
+\begin_inset Formula $\sum_{i=1}^{N}y_{i}^{2}$
+\end_inset
+
+，分别被表示为
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+Sum_xy，Sum_x，Sum_y，Sum_x2，Sum_y2这五个向量。在计算过程中，我们可以直接略过那些值为零的项，只计算非零项。如向量x有下标为i的项，
+而y没有这个项，也就是y中对应下标的项为零，那么这个项只会影响到Sum_x，Sum_x2这两个变量，代码17～24行就是处理这种情况。代码第25～32行处理两个
+向量共同具有的项的情况。代码34～39行处理其中一个向量先达到末尾的情况，最后根据式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pearson implemention"
+
+\end_inset
+
+我们得出最终的pearson相关系数。
+\end_layout
+
+\begin_layout Subsubsection
+spearman秩相关系数
+\end_layout
+
+\begin_layout Standard
+通过章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:spearman秩相关系数"
+
+\end_inset
+
+我们知道，计算spearman最关键的步骤就是将向量中的每一项映射成秩，接着计算其pearson相关系数就简单了。将。
+\begin_inset Formula $\mathbf{x}=(25,13,14,31,10,14,37,14)$
+\end_inset
+
+,将其每一项映射成秩的过程见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:向量编秩过程"
+
+\end_inset
+
+。首先，将向量每个项按照值的大小排序，得到如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:向量编秩过程"
+
+\end_inset
+
+中的第2个列表。接着，我们将该列表每一项编号为其在列表中的位置，见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:向量编秩过程"
+
+\end_inset
+
+中的第3个列表。最后，我们看到列表3中的3，4，5应相同的值：14，因此我们调整这个值对应的秩为这3，4，5的评价值
+\begin_inset Formula $\frac{3+4+5}{3}=4$
+\end_inset
+
+，得到列表4。于是我们就可以得到将原始值映射成秩的对应列，见表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:每个值与秩的映射列表"
+
+\end_inset
+
+。因此，将向量
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\mathbf{x}=(25,13,14,31,10,14,37,14)$
+\end_inset
+
+编秩的结果
+\begin_inset Formula $rank_{x}=(6,2,4,7,1,4,8,4)$
+\end_inset
+
+。
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 编秩过程.eps
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:向量编秩过程"
+
+\end_inset
+
+向量编秩过程
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+原始值
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+秩
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+37
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:每个值与秩的映射列表"
+
+\end_inset
+
+每个值与秩的映射列表
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+综上所描述，几个步骤的目的是获得类似表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:每个值与秩的映射列表"
+
+\end_inset
+
+的对应关系，下列代码中的函数接受向量
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+该向量由python的list表示，并非稀疏向量
+\end_layout
+
+\end_inset
+
+，并返回表示对应关系的字典rdict，rdict是一个(key,value)的hash表，其中的key表示原始值，value表示对应的秩。
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def get_rank_dict(vector):
+\end_layout
+
+\begin_layout Plain Layout
+
+    v = vector[:]
+\end_layout
+
+\begin_layout Plain Layout
+
+    v.sort()
+\end_layout
+
+\begin_layout Plain Layout
+
+    v.append(None)#nothing equals to None
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    rank_l = range(1,len(v))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    k = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+    current = v[0]
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in range(len(v)):
+\end_layout
+
+\begin_layout Plain Layout
+
+        if current != v[i]:
+\end_layout
+
+\begin_layout Plain Layout
+
+            set_avg(rank_l,k,i-1)
+\end_layout
+
+\begin_layout Plain Layout
+
+            k = i
+\end_layout
+
+\begin_layout Plain Layout
+
+            current = v[i]
+\end_layout
+
+\begin_layout Plain Layout
+
+    rdict = {}
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in range(len(v)-1):
+\end_layout
+
+\begin_layout Plain Layout
+
+        rdict[str(v[i])] = rank_l[i]
+\end_layout
+
+\begin_layout Plain Layout
+
+    eturn rdict
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+def set_avg(l,start,end):
+\end_layout
+
+\begin_layout Plain Layout
+
+    avg = (end + start)/2.0 + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in range(start,end +1):
+\end_layout
+
+\begin_layout Plain Layout
+
+        l[i] = avg
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+代码第2行将传入的vector复制一份用于后续的操作，防止原有的向量被修改。第3行将复制的向量v按照项的大小排序，即图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:每个值与秩的映射列表"
+
+\end_inset
+
+中1～2的过程。第3行为了满足下边的循环的逻辑条件，在末尾添加一个值。第6行生成顺序的编号，对应图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:每个值与秩的映射列表"
+
+\end_inset
+
+的列表3，从列表3到列表4我们修改具有相同值的项对应的秩。函数set_avg(l,start,end)将列表l中从start到end的秩设置为它们的平均值。对于
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:每个值与秩的映射列表"
+
+\end_inset
+
+第3个表中的3，4，5，set_avg将把它们设为4。8～4行遍历排序过的向量，k值记录第一个与之前值不同的项的下标，通过比较当前值v[i]与之前的值比较，来确
+定set_avg中需要被设置为平均值的范围。最后5～7行生成表示对应关系的字典。
 \end_layout
 
 \begin_layout Subsubsection
@@ -4127,11 +5629,7 @@ reference "fig:类Config"
 \end_layout
 
 \begin_layout Subsection
-默认评分 
-\end_layout
-
-\begin_layout Subsection
-knn预测 
+KNN预测 
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:knn预测"
@@ -4139,6 +5637,208 @@ name "sub:knn预测"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+本文实现采用均值中心化的KNN预测，见式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:基于用户的KNN-中心化"
+
+\end_inset
+
+。下面代码实现了基于用户的协同过滤算法的评分预测：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def user_based_predict_by_knn(userid,itemid):
+\end_layout
+
+\begin_layout Plain Layout
+
+    mean = get_mean(userid)
+\end_layout
+
+\begin_layout Plain Layout
+
+    sim_list = get_user_topk_neighbor(userid)
+\end_layout
+
+\begin_layout Plain Layout
+
+    other_user_rate_list = []
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    for u,s in sim_list:
+\end_layout
+
+\begin_layout Plain Layout
+
+        r = get_rate(u,itemid)  #get other users rate
+\end_layout
+
+\begin_layout Plain Layout
+
+        if r:
+\end_layout
+
+\begin_layout Plain Layout
+
+            other_user_rate_list.append((u,s,r)) #user, similarity, rate
+\end_layout
+
+\begin_layout Plain Layout
+
+    if len(other_user_rate_list) == 0:  #no item in neighbor
+\end_layout
+
+\begin_layout Plain Layout
+
+        return mean
+\end_layout
+
+\begin_layout Plain Layout
+
+    else:
+\end_layout
+
+\begin_layout Plain Layout
+
+        sum1 = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+        sum2 = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+        for u,s,r in other_user_rate_list:
+\end_layout
+
+\begin_layout Plain Layout
+
+            sum1 += s * (r - get_mean(u))
+\end_layout
+
+\begin_layout Plain Layout
+
+            sum2 += s 
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\end_layout
+
+\begin_layout Plain Layout
+
+        predict_rate = userbaseline + sum1 / sum2
+\end_layout
+
+\begin_layout Plain Layout
+
+        return predict_rate
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+该函数接收userid，itemid作为参数，提供为具有userid的用户对具有itemid的物品的评分预测。第2行获取该用户打分的平均值。第3行根据useri
+d获取该用户的邻域，但是只获取邻域还不够，只有邻域中也为具有itemid的物品评过分的用户能作为评分预测的依据。第4行other_user_rate_list就
+是用于存储邻域中也为具有itemid的物品评过分的用户，list中每一项为一个元组(uid,sim,rate)，分别表示邻域中可用用户的id，与被预测用户的相似
+度，以及这个用户给目标物品的评分。6～9行中，遍历邻域中所有用户，找出为具有itemid的物品评过分的用户并存入other_user_rate_list中。第1
+1行处理了邻域中没有用户为目标物品评分的情况，直接返回用户的平均评分，这也是唯一可以利用的信息。
+\end_layout
+
+\begin_layout Standard
+第13～19行则是真正进行KNN来预测的过程。sum1表示式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:基于用户的KNN-中心化"
+
+\end_inset
+
+中的
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\underset{v\in\mathcal{N}_{i}(u)}{\sum}w_{u,v}(r_{v,i}-\overline{r_{v}})$
+\end_inset
+
+，
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+它每次循环都会加上s * (r - get_mean(u))，sum1则表示
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\underset{v\in\mathcal{N}_{i}(u)}{\sum}w_{u,v}$
+\end_inset
+
+，注意这里没有加上绝对值是因为本文不使用负相关的关联，所有与目标用户有负相似度的用户已经在函数get_user_topk_neighbor中过滤。19行得到最终
+结果并返回。
 \end_layout
 
 \begin_layout Subsection
@@ -4149,14 +5849,52 @@ name "sub:精确度评估"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Subsection
-交叉验证
+与交叉验证
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:交叉验证"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def RMSE_MAE_single_process():     count = 0     biassquare = 0.
+     totalbias = 0.
+     it = datafilereader.Reader(testfilepath,seperater,pattern_list).get_iterator(
+)          dao = CFpredictor.new_DAO_interface()     while True:        
+ record = it.get_next_dict()         if record == None:                 break
+         userid = int(record['user'])         itemid = int(record['movie'])
+         rate = float(record['rate'])         predict_rate = CFpredictor.predict_
+item_score(dao,userid,itemid)         bias = predict_rate - rate       
+  totalbias += abs(bias)         biassquare += bias * bias         count
+ += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+    return math.sqrt(biassquare / count), totalbias / count 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
 
 \end_inset
 
