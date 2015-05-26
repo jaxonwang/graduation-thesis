@@ -263,6 +263,13 @@ Amazon首页提供的TopN推荐
 
 \begin_layout Subsection
 生成推荐的方式
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:生成推荐的方式"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -464,10 +471,6 @@ key "56775"
 TinyRec是一个轻量级的推荐引擎，可以作为一个推荐框架使用。它可以从给定的数据集中读取数据并将其结构化。它提供不同的数据存储方式的支持，可以支持基于内存的数
 据库如Redis，也可以支持关系型数据库。它可以通过配置文件灵活得选择各种算法。它还提供了根据推荐结果计算推荐精确度的功能。TinyRec为本文各种算法研究以及
 推荐结果分析提供了支持。
-\backslash
-hline 
-\backslash
-hline 
 \end_layout
 
 \begin_layout Standard
@@ -481,15 +484,134 @@ hline
 son相关系数、spearman相关系数这几种，对于每种相似度度量方式，就有不同的修正方式。比如使用pearson相关系数的相似度度量算法可以选择默认评分填补（
 Default Voting）、重要性权重（Significance Weighting）等修正方式。同时相同算法下也有不同可选的参数，比如采用KNN来进行评分
 预测时候邻域大小K值的选择也会影响预测的结果。本文通过控制变量的方式，研究了不同的算法、相同算法下不同参数的选择对的评分预测精度影响，并根据结果给出了分析。最终
-分析了不同协同过滤算法的特性以及在实际应用中的选择subsection{推荐系统介绍} 考虑。
+分析了不同协同过滤算法的特性以及在实际应用中的选择考虑。
 \end_layout
 
 \begin_layout Subsection
 本文结构
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:本文结构"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 本文一共分为五章，文章结构以及各章内容如下：
+\end_layout
+
+\begin_layout Standard
+第一章介绍了推荐系统这个课题的背景以及其研究研究现状，介绍了推荐系统的任务以及基本的方法。还讨论了目前推荐技术面临的主要挑战，还探讨了其研究意义，给出了本文的结
+构。最后规定了本文使用的术语和记号。
+\end_layout
+
+\begin_layout Standard
+第二章主要介绍协同过滤推荐的关键技术。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:基于用户的协同过滤"
+
+\end_inset
+
+和章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:基于物品的协同过滤"
+
+\end_inset
+
+分别介绍了两种最常用的协同过滤算法：基于用户的协同过滤以及基于物品的协同过滤。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:相似度度量方法"
+
+\end_inset
+
+描述了几种常见的相似度度量方法。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:评分标准化"
+
+\end_inset
+
+介绍的评分标准化方法是推荐算法挖掘内在关联的必要过程。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:用K邻近算法预测"
+
+\end_inset
+
+讨论了邻域选取的几种方法，最后章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:预测精确率度量"
+
+\end_inset
+
+介绍了如何度量算法的精确度。
+\end_layout
+
+\begin_layout Standard
+第三章给出了一个推荐引擎的实现，这一章介绍了推荐引擎TinyRec的设计方法并给出了部分代码，这些代码都经过修改，去除了一些不必要的细节，方便读者阅读。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:系统功能模块划分"
+
+\end_inset
+
+和章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:系统体系结构设计"
+
+\end_inset
+
+介绍了引擎TinyRec的系统模块划分以及系统的架构设计。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:功能模块的设计与实现"
+
+\end_inset
+
+则给出了系统中各个模块的具体的设计，介绍了其中设计的方法和思想。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:算法设计与实现"
+
+\end_inset
+
+着重于推荐算法的实现，介绍了TinyRec使用的几种相似度算法和预测算法。
+\end_layout
+
+\begin_layout Standard
+第四章比较了不同算法的结果以及不同参数对算法精确性的影响。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:实验数据与度量标准"
+
+\end_inset
+
+介绍了实验使用的数据以及使用的度量标准，章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:实验方法"
+
+\end_inset
+
+描述了实验的方法以及过程。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:实验内容及结果"
+
+\end_inset
+
+则是给出了不同的实验结果及对结果的分析，并且比较了不同算法的特性。
+\end_layout
+
+\begin_layout Standard
+第五章则对本文作出一个总结，对现有问题进行归纳，并对未来的工作作出展望。
 \end_layout
 
 \begin_layout Section
@@ -885,7 +1007,7 @@ name "tab:本文术语表格"
 \end_layout
 
 \begin_layout Chapter
-协同过滤推荐关键技术介绍
+协同过滤推荐关键章节技术条件介绍
 \end_layout
 
 \begin_layout Section
@@ -910,8 +1032,8 @@ reference "tab:四个用户为电影的评分表格"
 \end_inset
 
 ，表中有四个用户对四部电影的不同评分，评分取值范围为1～5分，空值表示该用户未能给该电影评分，而问号是我们即将要对其给出预测。首先张三和赵六的兴趣比较相似，因为
-他们喜欢相同的电影，给星球大战和超时空接触打了高分，并且不怎么喜欢篮球梦。而对比赵六和剩下两个人的兴趣，发现他们的兴趣不是那么一致，因此张三给泰坦尼克的分数将作
-为我们主要的参考来预测赵六的评分。而李四和王五的评分对预测结果的影响就非常小了。
+他们喜欢相同的电影，给星球章节大战和超时空接触打了高分，并且不怎么喜欢篮球梦。而对比赵六和剩下两个人的兴趣，发现他们的兴趣不是那么一致，因此张三给泰坦尼克的分数
+将作为我们主要的参考来预测赵六的评分。而李四和王五的评分对预测结果的影响就非常小了。
 \begin_inset Float table
 wide false
 sideways false
@@ -1191,6 +1313,13 @@ name "tab:四个用户为电影的评分表格"
 
 \begin_layout Subsection
 基于用户的协同过滤
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:基于用户的协同过滤"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1373,6 +1502,13 @@ reference "sub:相似度度量方法"
 
 \begin_layout Subsection
 基于物品的协同过滤
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:基于物品的协同过滤"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1391,8 +1527,8 @@ key "861437"
 \end_inset
 
 。基于物品相似度的一个特点是不同于用户之间的相似度，物品之间的相似度比较稳定，基本只要计算一次就可以长时间使用。用户之间的相似度可能随着用户评价更多的物品或者用
-户的兴趣变化的而逐渐变化，因此过一段时间需要重新计算。基于物品的协同过滤基于这样的一个假设，有两个相似的物品A和B，对于一个特定的用户来说，该用户对物品A的评价
-应该和对于物品B的评价接近。类似与基于用户的协同过滤算法，基于物品的协同过滤算法可以分为下边几个步骤：
+户的兴趣变化的而逐渐变化，因此过一段时间需要重新计算。基章节于物品的协同过滤基于这样的一个假设，有两个相似的物品A和B，对于一个特定的用户来说，该用户对物品A的
+评价应该和对于物品B的评价接近。类似与基于用户的协同过滤算法，基于物品的协同过滤算法可以分为下边几个步骤：
 \end_layout
 
 \begin_layout Enumerate
@@ -1604,7 +1740,7 @@ cos(\mathbf{x}_{i},\mathbf{x}_{j})=\frac{\underset{u\in U_{i}\cap U_{j}}{\sum}r_
 \end_layout
 
 \begin_layout Standard
-余弦相似度可以进一步根据用户个人的打分习惯来调整，见章节
+余弦相似度可以进一步根据用户个人的打分习惯来调整章节，见章节
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:用K邻近算法预测"
@@ -1881,12 +2017,15 @@ key "706157,JonathanLHerlocker1999An"
 时将会达到最好的结果。
 \end_layout
 
-\begin_layout Subsubsection
-方差权重
-\end_layout
-
 \begin_layout Subsection
 评分标准化
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:评分标准化"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2106,10 +2245,24 @@ key "JonathanLHerlocker1999An,good1999combining"
 
 \begin_layout Section
 预测精确率度量
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:预测精确率度量"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-度量方法
+精确率度量方法
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:精确率度量方法"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2688,43 +2841,7 @@ name "tab:评分分割例子"
 \end_layout
 
 \begin_layout Chapter
-一个基于协同过[global]
-\end_layout
-
-\begin_layout Standard
-storage = redis 	;The place where data are stored.
-\end_layout
-
-\begin_layout Standard
-multithread = auto 	;Enable multi-thread optimization.
-\end_layout
-
-\begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
-[collaborative filtering] 
-\end_layout
-
-\begin_layout Standard
-model = user-based 	；Using user-based model
-\end_layout
-
-\begin_layout Standard
-similarity = pearson 	;Chosing similarity
-\end_layout
-
-\begin_layout Standard
-significance_weight = 80 ;Threshold for the significance weighting
-\end_layout
-
-\begin_layout Standard
-neighborsize_K = 140
-\end_layout
-
-\begin_layout Chapter
-的评分预测引擎TinyRec的实现 
+一个基于协同过滤的评分预测引擎TinyRec的实现 
 \end_layout
 
 \begin_layout Section
@@ -2751,6 +2868,13 @@ status open
 
 \begin_layout Section
 系统功能模块划分 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:系统功能模块划分"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2811,6 +2935,13 @@ name "fig:系统总功能模块图"
 
 \begin_layout Section
 系统体系结构设计
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:系统体系结构设计"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2866,6 +2997,13 @@ TinyRec的系统架构图
 
 \begin_layout Section
 功能模块的设计与实现
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:功能模块的设计与实现"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3047,51 +3185,7 @@ def split(infile, outdir, k_fo):
 
 \begin_layout Plain Layout
 
-        rating_list[global]
-\end_layout
-
-\begin_layout Plain Layout
-
-storage = redis 	;The place where data are stored.
-\end_layout
-
-\begin_layout Plain Layout
-
-multithread = auto 	;Enable multi-thread optimization.
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-[collaborative filtering] 
-\end_layout
-
-\begin_layout Plain Layout
-
-model = user-based 	；Using user-based model
-\end_layout
-
-\begin_layout Plain Layout
-
-similarity = pearson 	;Chosing similarity
-\end_layout
-
-\begin_layout Plain Layout
-
-significance_weight = 80 ;Threshold for the significance weighting
-\end_layout
-
-\begin_layout Plain Layout
-
-neighborsize_K = 140
-\end_layout
-
-\begin_layout Plain Layout
-
-_for_a_user.append(line)
+            rating_for_a_user.append(line)
 \end_layout
 
 \begin_layout Plain Layout
@@ -3979,6 +4073,13 @@ reference "sub:精确度评估"
 
 \begin_layout Subsubsection
 交叉验证
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:交叉验证模块"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4049,14 +4150,13 @@ reference "sub:交叉验证"
 
 \begin_layout Section
 算法设计与实现 
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:算法设计与实现"
 
-\begin_layout Subsection
-item-based协同过滤 
-\end_layout
+\end_inset
 
-\begin_layout Subsection
-user-based协同过滤 
+
 \end_layout
 
 \begin_layout Subsection
@@ -5860,6 +5960,10 @@ name "sub:交叉验证"
 \end_layout
 
 \begin_layout Standard
+由于RMSE和MAE在计算过程中很相似，它们可以一并来实现，下面代码给出了一个实现：
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -5872,21 +5976,90 @@ begin{python}
 
 \begin_layout Plain Layout
 
-def RMSE_MAE_single_process():     count = 0     biassquare = 0.
-     totalbias = 0.
-     it = datafilereader.Reader(testfilepath,seperater,pattern_list).get_iterator(
-)          dao = CFpredictor.new_DAO_interface()     while True:        
- record = it.get_next_dict()         if record == None:                 break
-         userid = int(record['user'])         itemid = int(record['movie'])
-         rate = float(record['rate'])         predict_rate = CFpredictor.predict_
-item_score(dao,userid,itemid)         bias = predict_rate - rate       
-  totalbias += abs(bias)         biassquare += bias * bias         count
- += 1
+def RMSE_MAE(testfilepath,othersettings):
 \end_layout
 
 \begin_layout Plain Layout
 
-    return math.sqrt(biassquare / count), totalbias / count 
+    count = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+    totalbiassquare = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    totalbias = 0.
+\end_layout
+
+\begin_layout Plain Layout
+
+    it = Reader(testfilepath,seperater,pattern_list).get_iterator()
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    while True:
+\end_layout
+
+\begin_layout Plain Layout
+
+        record = it.get_next_dict()one_validate
+\end_layout
+
+\begin_layout Plain Layout
+
+        if record == None:
+\end_layout
+
+\begin_layout Plain Layout
+
+                break
+\end_layout
+
+\begin_layout Plain Layout
+
+        predict_rate = predict_item_score(record.userid,record.itemid)
+\end_layout
+
+\begin_layout Plain Layout
+
+        bias = predict_rate - record.rate
+\end_layout
+
+\begin_layout Plain Layout
+
+        totalbias += abs(bias)
+\end_layout
+
+\begin_layout Plain Layout
+
+        totalbiassquare += bias * bias
+\end_layout
+
+\begin_layout Plain Layout
+
+        count += 1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    return math.sqrt(totalbiassquare / count), totalbias / count
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -5901,28 +6074,686 @@ end{python}
 
 \end_layout
 
+\begin_layout Standard
+其中变量count表示测试样本数，即
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:RMSE"
+
+\end_inset
+
+与式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:MAE"
+
+\end_inset
+
+中的
+\begin_inset Formula $\left|Ts\right|$
+\end_inset
+
+，
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+totalbiassquare和totalbiass表示变差的平方和与偏差的绝对值和，对应
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+式
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:RMSE"
+
+\end_inset
+
+中的
+\begin_inset Formula $\underset{u,i\in Ts}{\sum}(\hat{r}_{u,i}-r_{u,i})^{2}$
+\end_inset
+
+和
+\begin_inset Formula $\underset{u,i\in Ts}{\sum}\left|\hat{r}_{u,i}-r_{u,i}\right|$
+\end_inset
+
+。第5行获取读取测试数据集的一个iterator。第11行调用
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+predict_item_score让推荐引擎TineyRec返回预测。
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+第12行
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+bias用来表示预测值与真实值之间的误差。最终17行分别返回计算出的RMSE与MAE的值。
+\end_layout
+
+\begin_layout Standard
+章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:交叉验证模块"
+
+\end_inset
+
+描述了交叉验证的大致流程，下面代码给出了其简单的实现：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def one_validate(train_path,test_path):
+\end_layout
+
+\begin_layout Plain Layout
+
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+    datatoredis(train_path) #read in file 
+\end_layout
+
+\begin_layout Plain Layout
+
+    all_simlarity(train_path) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    rmse = RMSE(train_path)
+\end_layout
+
+\begin_layout Plain Layout
+
+    return rmse
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+def cross_validate(k):
+\end_layout
+
+\begin_layout Plain Layout
+
+    datasetspliter.split(datafile_path,tofile_dir,k)
+\end_layout
+
+\begin_layout Plain Layout
+
+    rmse_list = []
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in range(k):
+\end_layout
+
+\begin_layout Plain Layout
+
+        train_path = tofile_dir + "/train_%d.dat"%(i)
+\end_layout
+
+\begin_layout Plain Layout
+
+        test_path = tofile_dir + "/test_%d.dat"%(i)
+\end_layout
+
+\begin_layout Plain Layout
+
+        accu = one_validate(train_path,test_path)
+\end_layout
+
+\begin_layout Plain Layout
+
+        rmse_list.append(accu)
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    return sum(rmse_list)/len(rmse_list)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+one_validate函数是执行一次数据导入、计算相似度、计算精确度的完整过程。第9行对原始数据集合做出一次切割，rmse_list用于存储每一次计算的RMS
+E精确度。12～16行一共调用k次one_validate来得到每一次的精确度，最后18行返回平均值作为最终结果。
+\end_layout
+
 \begin_layout Subsection
 并行化
 \end_layout
 
+\begin_layout Standard
+为了充分利用计算机的CPU资源，本文对相似度模块进行了并行化处理。接下来以基于用户的协同过滤算法为例，介绍算法并行化的设计与实现。根据相似度模块中的工作，每一个
+用户都将会与其他用户计算一次复杂度，而每个用户在计算时候，所需的数据为其他用户的评分记录（被转化成向量的形式），并且不修改其他用户的记录，计算完毕之后的相似度也
+与其他用户的计算的相似度分别存储。综上，我们很容易地对相似度模块进行并行化处理而不用考虑太多的同步问题，如图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:相似度模块并行化"
+
+\end_inset
+
+所示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 并行化.eps
+	width 90line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:相似度模块并行化"
+
+\end_inset
+
+相似度模块并行化
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:相似度模块并行化"
+
+\end_inset
+
+，我们将要计算用户id为1～80的用户之间的相似度
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+这里假设用户id是连续的，用户id的编号方式不影响最终结果
+\end_layout
+
+\end_inset
+
+，我们首先对其进行分割，分割的数量根据需要而定，可以是cpu的逻辑核数。分割采用平均分割的方法，图中把80个用户平均分割成4份，每一份对其计算其中每个用户的的相
+似度，这一过程可以被同时执行。在实现中，我们可以在all_similarity过程中进行这个工作，代码如下：
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{python}
+\end_layout
+
+\begin_layout Plain Layout
+
+def all_similarity():
+\end_layout
+
+\begin_layout Plain Layout
+
+    devide_number = multithread
+\end_layout
+
+\begin_layout Plain Layout
+
+    start = 0 
+\end_layout
+
+\begin_layout Plain Layout
+
+    total = maxuserid + 1 - start
+\end_layout
+
+\begin_layout Plain Layout
+
+    proclist = []
+\end_layout
+
+\begin_layout Plain Layout
+
+    for i in range(0,devide_number):
+\end_layout
+
+\begin_layout Plain Layout
+
+        end = start + total / devide_number
+\end_layout
+
+\begin_layout Plain Layout
+
+        if end > maxuserid or i == devide_number - 1:
+\end_layout
+
+\begin_layout Plain Layout
+
+            end = maxuserid + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+        p = Process(target = user_similarity_in_range,args = (start,end))
+\end_layout
+
+\begin_layout Plain Layout
+
+        proclist.append(p)
+\end_layout
+
+\begin_layout Plain Layout
+
+        p.start()
+\end_layout
+
+\begin_layout Plain Layout
+
+        start = end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    for p in proclist:
+\end_layout
+
+\begin_layout Plain Layout
+
+        p.join()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+def user_similarity_in_range(start,end):
+\end_layout
+
+\begin_layout Plain Layout
+
+   for userid in range(start,end):
+\end_layout
+
+\begin_layout Plain Layout
+
+        similarity_to_others(userid) 
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{python} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在实现时，由于python线程包对cpu资源利用率有限，我们使用多进程的编程方式，为每个分割创建一个进程，如代码第5，10，15～16行：proclist用于保
+存进程，6～9行用于分割数据，接着再传给各个进程。函数user_similarity_in_range则是对每个分割计算其中每个用户与其他用户的相似度。但是上述
+实现隐藏了一个问题：多个进程很容易同时访问某个用户的评分记录导致性能下降，本文实现将这一问题推至给Redis，如果采用其他并发效率低的存储方式，可以在本地建立一
+个缓存，还可以让每个进程错开在同一时间内访问相同用户的评分记录的方式，具体实现本文不再讨论。
+\end_layout
+
 \begin_layout Chapter
-评分预测实验 
+算法精确度实验 
+\end_layout
+
+\begin_layout Standard
+为了比较不同算法的结果以及不同参数对算法精确性的影响，本文在TinyRec推荐引擎上应用了不同的算法来进行分析比较。
 \end_layout
 
 \begin_layout Section
-实验目的及内容 
+实验数据与度量标准
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:实验数据与度量标准"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection
-实验数据及实验方法 
+\begin_layout Standard
+本文使用与文章
+\begin_inset CommandInset citation
+LatexCommand cite
+key "124971"
+
+\end_inset
+
+中相同的数据集，MovieLens数据集。MovieLens是美国Minnesota大学计算机科学学院的GroupLens小组于1997年创办的一个非商业的电影
+站点，用于科学研究。它每周有数以百计的用户访问网站并且为电影评分
+\begin_inset CommandInset citation
+LatexCommand cite
+key "124971"
+
+\end_inset
+
+。目它对外公开了其数据集合，本文使用的数据集合是其中的100K的版本，即一共有十万条评分记录。这个数据集中一共有1682件物品，943个用户。其中每个用户都至少
+为20个电影给出了评分。
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename user_rating_frequency_data.jpeg
+	width 60col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:单个用户评分数量直方图"
+
+\end_inset
+
+单个用户评分数量直方图
 \end_layout
 
-\begin_layout Subsection
-度量标准
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection
-实验结果与分析
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename item_rating_frequency_data.jpeg
+	width 60col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:单个电影得到评分数量直方图"
+
+\end_inset
+
+单个电影得到评分数量直方图
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+通过对MovieLens数据集的分析，我们可以发现这么一个事实，大部分用户只对一小部分电影评分，而大部分电影只收到很少的用户的评分甚至没有评分。见图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:单个用户评分数量直方图"
+
+\end_inset
+
+为单个用户评分数量直方图，图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:单个电影得到评分数量直方图"
+
+\end_inset
+
+为单个电影评分数量直方图。
+\end_layout
+
+\begin_layout Standard
+章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:精确率度量方法"
+
+\end_inset
+
+给出了两种不同的精确度度量方法，两者都是通过比较实际值与预测值的误差来衡量误差：最终RMSE或者MAE的值越低则说明算法越准确。由于MAE被广泛使用并且能够很好
+地用于解释和说明，本实验主要使用MAE的方法来度量预测结果的精确度。
+\end_layout
+
+\begin_layout Section
+实验方法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:实验方法"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+本文接下来的实验采用交叉验证的方法，一般经验上来讲，交叉数目为5或者10，为了能有更多的信息来提供预测，本文采用10-fold的交叉方式。在预测过程中，在计算时
+，对一个用户或者物品计算它与其他所有的用户或者物品的相似度，即每个其他的用户和物品都可能是该用户或者物品潜在的一个邻居，而不是使用抽样的方法，这样可以尽可能地利
+用到所有数据，更好地体现各个算法的特点。为了更好的比较同算法的结果以及不同参数对算法精确性的影响，在进行完整的实验前，在完整数据集上探索了即将被实验的参数和算法
+的较优值，所有的参数或者算法是在其他参数处于较优的情况下进行实验的。
+\end_layout
+
+\begin_layout Standard
+本文的实验步骤是使用章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:交叉验证模块"
+
+\end_inset
+
+中描述的模块中的过程来进行的，其中关键步骤为：
+\end_layout
+
+\begin_layout Enumerate
+数据分割：将数据集合随机分割成10份，这次分割的结果将用于接下来的全部实验，不再进行额外的重新分割过程。
+\end_layout
+
+\begin_layout Enumerate
+数据导入：选择一个测试数据集和训练数据集对，将训练数据导入到推荐引擎TinyRec中。
+\end_layout
+
+\begin_layout Enumerate
+计算相似度：在这个训练数据集中，计算两两之间的相似度。这里我们没有使用负相关的邻居。
+\end_layout
+
+\begin_layout Enumerate
+计算精确度：利用步骤3计算的结果来预测测试数据集中的数据，比较结果并计算精确度
+\end_layout
+
+\begin_layout Enumerate
+交叉验证：选择另一个测试数据集和训练数据集对，重复2～5过程，直到10对测试数据集和训练数据集对均被计算完毕，返回平均值作为一次实验的最终结果。
+\end_layout
+
+\begin_layout Standard
+本实验使用的系统环境如下：
+\end_layout
+
+\begin_layout Enumerate
+python解释器：PyPy 2.2.1 with GCC 4.8.2。PyPy是用Python实现的Python解释器，带有运行时编译功能，能够根据动态语言运行时的特
+点进行优化。本文选择PyPy的原因是其优秀的执行效率，同等情况下实验运行时间大致为CPyhon的四分之一。
+\end_layout
+
+\begin_layout Enumerate
+Linux x86_64操作系统，3.16.0内核版本。
+\end_layout
+
+\begin_layout Enumerate
+Redis 3.0.1 64位版本：本实验使用Redis作为推荐引擎TinyRec的数据存储方式。
+\end_layout
+
+\begin_layout Standard
+由于TinyRec目前是只支持单机计算，而且本文使用的数据集规模不大，所以采用PC机作为运行环境。本实验使用的硬件环境如下：
+\end_layout
+
+\begin_layout Standard
+1.CPU：E3 1230V3@3.3GHz
+\end_layout
+
+\begin_layout Standard
+2.内存：8GB
+\end_layout
+
+\begin_layout Standard
+3.Intel 520 SSD 120G
+\end_layout
+
+\begin_layout Section
+实验内容及结果
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:实验内容及结果"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -5930,7 +6761,71 @@ end{python}
 \end_layout
 
 \begin_layout Subsection
-knn k值选择 
+邻域大小的选择
+\end_layout
+
+\begin_layout Standard
+在使用基于用户以及基于物品的协同过滤推荐算法中，邻域大小的选择对算法结果影响巨大，过于小的邻域将使得可用信息过少，过于依赖于最相似的用户，而过大的邻域将会导致计
+算缓慢等问题。而目前选择领域大小也主要通过实验对比获得。在这个实验中，本文给出了不同邻域大小k值对准确度MAE的影响。本实验k取值范围为10～140相隔10的大
+小计算一次精确度，一共14组数据，分别对Cosine相关系数，Pearson相关系数和Spearman秩相关系数这三个方法研究邻域大小对其精确度的影响。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename k对精确度影响.eps
+	width 80col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:邻域大小k对不同算法精确度的影响"
+
+\end_inset
+
+邻域大小k对不同算法精确度的影响
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+图
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:邻域大小k对不同算法精确度的影响"
+
+\end_inset
+
+为邻域大小k对不同算法精确度的影响。从图中我们可以看出Cosine相关系数，Pearson相关系数这两个相似度方法的折线非常接近，在k值从10～50范围内，MA
+E随着k值增大下降明显，随后的MAE量一直稳定在0.742左右变化不大，而k值对于spearman秩相关系数方法在10～130区间内一直在下降，一开始spearm
+an秩相关系数MAE误差相对其他两个方法较低，而随着k值的增加，和其他两个的MAE值越来越接近。不难发现，spearman秩相关系数更加依赖于大的邻区域。
+\end_layout
+
+\begin_layout Subsubsection
+基于用户的协同过滤算法
 \end_layout
 
 \begin_layout Subsection
@@ -5941,76 +6836,47 @@ significance weighting 值选择
 item-based vs user-based 
 \end_layout
 
-\begin_layout Subsection
-4.4.4.5 。。
-\end_layout
-
 \begin_layout Chapter
-未来的工作 
-\end_layout
-
-\begin_layout Chapter
-结语
+总结与展望
 \end_layout
 
 \begin_layout Standard
-我草拟麻痹
+本文主要给出了一个推荐引擎TinyRec的设计与实现，并且比较了不同算法的性能以及不同参数对算法结果的影响。进一步的的工作可以如下方面展开。
 \end_layout
 
-\begin_layout Standard
-我草拟麻痹我草拟麻痹
+\begin_layout Enumerate
+完善推荐算法。目前TinyRec只实现了基于协同过滤中基于用户以及基于物品的算法，用于产生评分预测。实现的算法较为简单，未来可以实现更多的协同过滤算法如SVD，
+slope one等最近较为热门算法，不仅如此，还可以实现基于内容过滤，基于规则过滤等推荐方式，让TinyRec更加灵活，适应工程上的要求等等。
 \end_layout
 
-\begin_layout Standard
-我草拟麻痹
+\begin_layout Enumerate
+拓展TinyRec。目前TinyRec只是作为一个推荐引擎使用，离一个真正的推荐系统还有很大的距离，比如提供推荐结果解释。推荐解释是在提供推荐时候为用户解释推荐
+的原因，使得推荐结果更加具有说服力，可以增大用户对推荐系统的信任程度。还应该能够提供最基本的TopN推荐，推荐应该着重于用户接受度，覆盖率，新颖度等指标，而不是
+只追求精确度，毕竟最终目的是推荐而不是预测。
 \end_layout
 
-\begin_layout Standard
-我草拟麻痹
+\begin_layout Enumerate
+推荐质量与时实性的平衡。大多数的推荐算法计算相似的度比较高，对于不断增长的数据量，离线计算将会花费大量时间。为了能够在一定时间内向用户给出推荐，可以升级硬件设备
+或者改进算法。比如用一些聚类的方法
+\begin_inset CommandInset citation
+LatexCommand cite
+key "1284393,485233,295125"
+
+\end_inset
+
+降低搜索空间，但是对应的会损失一些精确度。如何在保证推荐质量同时有效地提高计算效率需要值得研究。
 \end_layout
 
-\begin_layout Standard
-我草拟麻痹我草拟麻痹
-\end_layout
+\begin_layout Enumerate
+不同推荐算法的集成。章节
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:生成推荐的方式"
 
-\begin_layout Standard
-我草拟麻痹
-\end_layout
+\end_inset
 
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
-\end_layout
-
-\begin_layout Standard
-我草拟麻痹
+中描述了几种不同的推荐方式，以及混合推荐的方式。通过混合推荐，能够弥补不同算法的缺点。未来可以对TinyRec实现这一功能，使之能够按照要求选择算法并集成推荐结
+果。
 \end_layout
 
 \begin_layout Standard

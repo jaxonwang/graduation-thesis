@@ -1,0 +1,96 @@
+sig = 4
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.381768s
+Calculating similarity for each user.
+All user's similarities have been claculated in 50s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 34.557913s.
+(0.9471912523441839, 0.7414284924764258)
+sig = 8
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.304860s
+Calculating similarity for each user.
+All user's similarities have been claculated in 54s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 34.570126s.
+(0.9472927114669876, 0.7411839837110583)
+sig = 12
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.271756s
+Calculating similarity for each user.
+All user's similarities have been claculated in 55s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 34.999212s.
+(0.9477180112714145, 0.7416714463685944)
+sig = 16
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.314793s
+Calculating similarity for each user.
+All user's similarities have been claculated in 53s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 40.322740s.
+(0.9466703469355364, 0.7408887036748285)
+sig = 20
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.280706s
+Calculating similarity for each user.
+All user's similarities have been claculated in 52s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 37.898445s.
+(0.9466629736364751, 0.7408460972243801)
+sig = 24
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.342015s
+Calculating similarity for each user.
+All user's similarities have been claculated in 50s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 37.891127s.
+(0.9467210644221855, 0.7405823131636402)
+sig = 28
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.280726s
+Calculating similarity for each user.
+All user's similarities have been claculated in 52s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 38.726051s.
+(0.9471986108266708, 0.7409249306361657)
+sig = 32
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.314986s
+Calculating similarity for each user.
+All user's similarities have been claculated in 50s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 39.139480s.
+(0.9478641573333639, 0.7414165204450873)
+sig = 36
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.327222s
+Calculating similarity for each user.
+All user's similarities have been claculated in 53s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 40.606473s.
+(0.9481835581585509, 0.741209056775051)
+sig = 40
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.272980s
+Calculating similarity for each user.
+All user's similarities have been claculated in 51s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 43.069078s.
+(0.9484013407059433, 0.7411757092938484)
+sig = 44
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.297219s
+Calculating similarity for each user.
+All user's similarities have been claculated in 50s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 42.552179s.
+(0.9486932121595921, 0.741628631907914)
+sig = 48
+all keys cleared.
+Data from /home/wjx/recsys/data/train_1.dat imported to redis in : 0.290982s
+Calculating similarity for each user.
+All user's similarities have been claculated in 50s
+Using file:/home/wjx/recsys/data/test_1.dat to calculate RMSE.
+RMSE calculated in 43.401139s.
+(0.9495592744392367, 0.7419202167217728)

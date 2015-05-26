@@ -1,0 +1,18 @@
+互联网的普及让人类进入了信息时代，过多的数据导致了信息过载，用户面对庞大的数据，很难手动从中过滤掉无用的信息。对于数据过载这一问题，信息检索、数据挖掘、预测推荐等技术得到了广泛的应用。本文主要研究推荐系统的架构以及算法的设计，主要工作内容及成果如下:
+
+推荐引擎TinyRec设计与实现。TinyRec是一个轻量级的推荐引擎，可以作为一个推荐框架使用。它可以从给定的数据集中读取数据并将其结构化。它可以通过配置文件灵活得选择各种算法。它还提供了根据推荐结果计算推荐精确度的功能。TinyRec为本文各种算法研究以及推荐结果分析提供了支持。
+
+协同过滤算法的设计与实现。本文分别给出了主流的基于用户的协同过滤算法和基于物品的协调过滤算法的实现。对于不同的相似度算法，如余弦相似度、pearson相关系数、spearman相关系数，本文研究了一些实现的细节。针对协同过滤算法用户对物品评分的稀疏性问题，本文还实现了一个简单的稀疏向量的运算库。针对协同过滤算法复杂度高这一问题，本文给出了算法并行化的实现，使之能够更加充分得利用计算资源，减少计算时间。
+
+各种协同过滤算法的比较与分析。目前，对于一个协同过滤的推荐引擎，存在许多算法和参数的选择。同时相同算法下也有不同可选的参数，比如采用KNN来进行评分预测时候邻域大小K值的选择也会影响预测的结果。本文对不同的算法的结果以及不同参数带来的影响进行了分析。
+
+The spread of the Internet leads us to the Iifomation age. But a mass of data results in information overload. Facing huge amounts of data, user can hardly filter useless information manually. To solve this problem, Infomation retrieval, Data Minging, Recommended System technology are widely applied. This paper focuses on the research on architecture of Recommended System and the design on algorithms. Main contents and results are as follows:
+
+Design and implementation of a recommended engine, TinyRec. TinyRec is a lightweight recommended engine. It can be used as a recommended framework. It can read from specific data set and structuring the data. It reads the configuration file and choose the algorithm automatically. It also provides the function of measuring the accuracy of the result of algorithms. TinyRec supports the research and analysis in this paper.
+
+Design and implementation of collaborative filtering algorithm. This paper provides the implementation of user-based collaborative filtering and item-based collaborative filtering. This paper also gives some details of the similarity measuring algorithms such as Cosine correlation, Pearson correlation and Spearman rank correlation. Considering the sparsity of users' ratings, we implement a sparse vector library. We also parallelize the similarity algorithms for the high complexity of the collaborative filtering algorithm.
+
+Analysis and comparison between algorithms. There are many algorithms available for a collaborative filtering recommended engine. Various parameters also impacts the result. For example， the choice of neighborhood size k plays a key role in the predicting algorithms. This paper researches on the characteristic of different algorithms and gives explanations for the result.
+
+转眼间本科四年过去了，在四年中收获了不少
+本论文的顺利完成得意于众多师长学友亲人的帮助和支持，感激之情，片纸难纳。
